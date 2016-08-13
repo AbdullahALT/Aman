@@ -3,4 +3,7 @@
     <!-- This is taken from dropbox so they identify our application -->
     <string name="app_key">ixpfhawscfbmdyn</string>
     <string name="title_activity_files">Files</string>
+    <string name="image_description">ImageDescription</string>
+    <string name="text_description">text description</string>
+    <string name="sign_out">sign out</string>
 </resources>
