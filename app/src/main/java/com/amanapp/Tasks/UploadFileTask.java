@@ -1,11 +1,11 @@
-package com.amanapp.Tasks;
+package com.amanapp.tasks;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.amanapp.Utlities.UriHelpers;
+import com.amanapp.tasks.callbacks.Callback;
+import com.amanapp.utilities.UriHelpers;
 import com.dropbox.core.DbxException;
-
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;

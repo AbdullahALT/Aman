@@ -1,7 +1,8 @@
-package com.amanapp.Tasks;
+package com.amanapp.tasks;
 
 import android.os.AsyncTask;
 
+import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.v2.DbxClientV2;
 
 /**
@@ -10,9 +11,8 @@ import com.dropbox.core.v2.DbxClientV2;
 public abstract class Task<Params, Process, Return> extends AsyncTask<Params, Process, Return> {
 
     protected final DbxClientV2 dropboxClient;
-    protected Exception exception;
-
     private final Callback<Return> callback;
+    protected Exception exception;
     private boolean isSuccessful;
 
 
