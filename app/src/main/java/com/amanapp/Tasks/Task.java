@@ -15,7 +15,6 @@ public abstract class Task<Params, Process, Return> extends AsyncTask<Params, Pr
     protected Exception exception;
     private boolean isSuccessful;
 
-
     public Task(DbxClientV2 dropboxClient, Callback<Return> callback) {
         this.dropboxClient = dropboxClient;
         this.callback = callback;
