@@ -1,6 +1,7 @@
 package com.amanapp.tasks;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.v2.DbxClientV2;
@@ -15,7 +16,7 @@ public abstract class Task<Params, Process, Return> extends AsyncTask<Params, Pr
     protected Exception exception;
     private boolean isSuccessful;
 
-    public Task(DbxClientV2 dropboxClient, Callback<Return> callback) {
+    public Task(@NonNull DbxClientV2 dropboxClient, @NonNull Callback<Return> callback) {
         this.dropboxClient = dropboxClient;
         this.callback = callback;
         this.isSuccessful = false;
@@ -30,7 +31,7 @@ public abstract class Task<Params, Process, Return> extends AsyncTask<Params, Pr
         if (exception != null) {
             callback.onError(exception);
         } else if (result == null) {
-            callback.onError(null);
+            callback.onError(new NullPointerException("Result is null"));
         } else {
             callback.onTaskComplete(result);
             isSuccessful = true;

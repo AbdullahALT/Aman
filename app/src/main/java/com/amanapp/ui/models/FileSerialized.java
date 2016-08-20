@@ -20,6 +20,7 @@ public class FileSerialized implements Serializable {
     private Date modified;
     private String extension;
     private String folder;
+    private String rev;
 
     public FileSerialized(FileMetadata file) {
         size = file.getSize();
@@ -27,6 +28,7 @@ public class FileSerialized implements Serializable {
         pathLower = file.getPathLower();
         created = file.getClientModified();
         modified = file.getServerModified();
+        rev = file.getRev();
         setter();
     }
 
@@ -41,6 +43,10 @@ public class FileSerialized implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getFullName() {
+        return name +"."+ extension;
     }
 
     public String getSize() {
@@ -73,6 +79,10 @@ public class FileSerialized implements Serializable {
 
     public String getFolder() {
         return folder;
+    }
+
+    public String getRev() {
+        return rev;
     }
 
     private String getString(Date date) {
