@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.ui.models.Operation;
@@ -45,7 +46,20 @@ public class UploadActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadFile();
+                if (!(uploadName.getText().toString().length() <= 0)) {
+                    uploadFile();
+                } else {
+                    Toast.makeText(UploadActivity.this, "Enter the name of the file", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        Button cancelButton = (Button) findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -65,6 +79,8 @@ public class UploadActivity extends AppCompatActivity {
                 Log.v(TAG, "resultCode is RESULT_OK: " + data.getData().getPath());
                 uri = data.getData().toString();
                 //uploadFile(data.getData().toString());
+            } else {
+                finish();
             }
         }
     }

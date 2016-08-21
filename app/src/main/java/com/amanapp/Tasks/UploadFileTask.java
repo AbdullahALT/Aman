@@ -18,7 +18,7 @@ import java.io.InputStream;
 /**
  * Async task to upload a file to a directory
  */
-public class UploadFileTask extends Task<String, Void, FileMetadata> {
+public class UploadFileTask extends Task<String, Integer, FileMetadata> {
 
     private final Context context;
 
