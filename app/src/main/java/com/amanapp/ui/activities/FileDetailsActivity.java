@@ -3,6 +3,7 @@ package com.amanapp.ui.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,9 +23,8 @@ import com.amanapp.ui.models.Operation;
 
 public class FileDetailsActivity extends AppCompatActivity {
 
-    private final static String TAG = FileDetailsActivity.class.getName();
     public final static String SERIALIZED_FILE = "SERIALIZED_FILE";
-
+    private final static String TAG = FileDetailsActivity.class.getName();
     private FileSerialized file;
 
     @Override
@@ -87,4 +87,8 @@ public class FileDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

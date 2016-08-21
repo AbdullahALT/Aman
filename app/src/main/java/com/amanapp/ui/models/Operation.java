@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ import com.amanapp.tasks.callbacks.Callback;
 public abstract class Operation<Return> implements Callback<Return> {
 
     //TODO: Handle the onComplete and onError function in a better way
+    //TODO: The waiting process for the operation might be in a separate class to easily change them later
     protected ProgressDialog dialog;
     protected Context context;
     protected Activity activity;
@@ -29,6 +31,12 @@ public abstract class Operation<Return> implements Callback<Return> {
         this.action = action;
 
     }
+
+    protected abstract void startAction();
+
+    protected abstract void onPermissionDenied(String permission);
+
+    protected abstract void onPermissionGranted(String waitingMessage);
 
     public void performWithPermissions(final FileAction action, String waitingMessage) {
         if (hasPermissionsForAction(action)) {
@@ -53,6 +61,16 @@ public abstract class Operation<Return> implements Callback<Return> {
         }
     }
 
+    public void onRequestPermissionsResult(@NonNull String[] permissions, @NonNull int[] grantResults, String waitingMessage) {
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                onPermissionDenied(permissions[i]);
+                return;
+            }
+        }
+        onPermissionGranted(waitingMessage);
+    }
+
     protected void performAction(FileAction action, String waitingMessage) {
         if (this.action == action) {
             onWaiting(waitingMessage);
@@ -67,8 +85,6 @@ public abstract class Operation<Return> implements Callback<Return> {
         dialog.setMessage(waitingMessage);
         dialog.show();
     }
-
-    protected abstract void startAction();
 
     protected boolean hasPermissionsForAction(FileAction action) {
         for (String permission : action.getPermissions()) {

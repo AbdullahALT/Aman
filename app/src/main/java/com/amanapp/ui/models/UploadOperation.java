@@ -2,15 +2,14 @@ package com.amanapp.ui.models;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
+import com.amanapp.R;
 import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.tasks.UploadFileTask;
 import com.dropbox.core.v2.files.FileMetadata;
-
-import java.io.File;
 
 /**
  * Created by Abdullah ALT on 8/20/2016.
@@ -34,9 +33,24 @@ public class UploadOperation extends Operation<FileMetadata> {
     }
 
     @Override
+    protected void onPermissionDenied(String permission) {
+        Toast.makeText(context,
+                "Can't upload file: read access denied. " +
+                        "Please grant storage permissions to use this functionality.",
+                Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    protected void onPermissionGranted(String waitingMessage) {
+        performAction(action, waitingMessage);
+    }
+
+    @Override
     public void onTaskComplete(FileMetadata result) {
         dialog.dismiss();
         Toast.makeText(context, "The file has been uploaded", Toast.LENGTH_LONG).show();
+        Snackbar.make(activity.findViewById(R.id.container), "Test", Snackbar.LENGTH_LONG).show();
     }
 
     @Override

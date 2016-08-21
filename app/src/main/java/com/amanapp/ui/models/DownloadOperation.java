@@ -36,6 +36,20 @@ public class DownloadOperation extends Operation<File> {
     }
 
     @Override
+    protected void onPermissionDenied(String permission) {
+        Toast.makeText(context,
+                "Can't download file: write access denied. " +
+                        "Please grant storage permissions to use this functionality.",
+                Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    protected void onPermissionGranted(String waitingMessage) {
+        performAction(action, waitingMessage);
+    }
+
+    @Override
     public void onTaskComplete(File result) {
         dialog.dismiss();
         Toast.makeText(context, "The file has been downloaded", Toast.LENGTH_LONG).show();
