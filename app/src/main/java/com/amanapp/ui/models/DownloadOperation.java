@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.tasks.DownloadFileTask;
@@ -17,13 +18,15 @@ public class DownloadOperation extends Operation<File> {
 
     private final String TAG = DownloadOperation.class.getName();
 
+    private final FileSerialized file;
+
     public DownloadOperation(@NonNull Context context, @NonNull Activity activity, @NonNull FileSerialized file) {
-        super(context, activity, file);
-        action = FileAction.DOWNLOAD;
+        super(context, activity, FileAction.DOWNLOAD);
+        this.file = file;
     }
 
     @Override
-    protected void startAction(FileSerialized file) {
+    protected void startAction() {
         new DownloadFileTask(
                 context,
                 DropboxClientFactory.getClient(),
@@ -35,12 +38,14 @@ public class DownloadOperation extends Operation<File> {
     @Override
     public void onTaskComplete(File result) {
         dialog.dismiss();
+        Toast.makeText(context, "The file has been downloaded", Toast.LENGTH_LONG).show();
         Log.v(TAG, "The file is downloaded");
     }
 
     @Override
     public void onError(Exception e) {
         dialog.dismiss();
+        Toast.makeText(context, "Error downloading the file", Toast.LENGTH_LONG).show();
         Log.v(TAG, "Failed Downloading the file");
     }
 }

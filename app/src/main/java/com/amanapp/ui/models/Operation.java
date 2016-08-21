@@ -18,17 +18,16 @@ import com.amanapp.tasks.callbacks.Callback;
 public abstract class Operation<Return> implements Callback<Return> {
 
     //TODO: Handle the onComplete and onError function in a better way
-    protected final ProgressDialog dialog;
+    protected ProgressDialog dialog;
     protected Context context;
     protected Activity activity;
-    protected FileSerialized file;
     protected FileAction action;
 
-    public Operation(Context context, Activity activity, FileSerialized file) {
+    public Operation(Context context, Activity activity, FileAction action) {
         this.context = context;
         this.activity = activity;
-        this.file = file;
-        this.dialog = new ProgressDialog(context);
+        this.action = action;
+
     }
 
     public void performWithPermissions(final FileAction action, String waitingMessage) {
@@ -57,18 +56,19 @@ public abstract class Operation<Return> implements Callback<Return> {
     protected void performAction(FileAction action, String waitingMessage) {
         if (this.action == action) {
             onWaiting(waitingMessage);
-            startAction(file);
+            startAction();
         }
     }
 
     protected void onWaiting(String waitingMessage) {
+        dialog = new ProgressDialog(context);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setCancelable(false);
         dialog.setMessage(waitingMessage);
         dialog.show();
     }
 
-    protected abstract void startAction(FileSerialized file);
+    protected abstract void startAction();
 
     protected boolean hasPermissionsForAction(FileAction action) {
         for (String permission : action.getPermissions()) {

@@ -30,24 +30,22 @@ public class UploadFileTask extends Task<String, Void, FileMetadata> {
 
     @Override
     protected FileMetadata doInBackground(String... params) {
-        String localUri = params[0];
+        String remoteFolderPath = params[0];
+        String remoteFileName = params[1];
+        String localUri = params[2];
         File localFile = UriHelpers.getFileForUri(context, Uri.parse(localUri));
-
         if (localFile != null) {
-            String remoteFolderPath = params[1];
-
-            // Note - this is not ensuring the name is a valid dropbox file name
-            String remoteFileName = localFile.getName();
-
+            String name = localFile.getName();
+            String parts[] = name.split("\\.");
+            String extension = parts[1];
             try (InputStream inputStream = new FileInputStream(localFile)) {
-                return dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName)
+                return dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension)
                         .withMode(WriteMode.OVERWRITE)
                         .uploadAndFinish(inputStream);
             } catch (DbxException | IOException e) {
                 exception = e;
             }
         }
-
         return null;
     }
 }

@@ -37,7 +37,8 @@
         <activity
             android:name=".ui.activities.FileDetailsActivity"
             android:label="@string/title_activity_file_details"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activities.UploadActivity"></activity>
     </application>
 
 </manifest>

@@ -23,6 +23,8 @@ import com.amanapp.ui.models.Operation;
 public class FileDetailsActivity extends AppCompatActivity {
 
     private final static String TAG = FileDetailsActivity.class.getName();
+    public final static String SERIALIZED_FILE = "SERIALIZED_FILE";
+
     private FileSerialized file;
 
     @Override
@@ -32,7 +34,7 @@ public class FileDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        file = ((FileSerialized) intent.getSerializableExtra("Serialized_File"));
+        file = ((FileSerialized) intent.getSerializableExtra(SERIALIZED_FILE));
 
         TextView name = (TextView) findViewById(R.id.file_name);
         name.setText(file.getName());

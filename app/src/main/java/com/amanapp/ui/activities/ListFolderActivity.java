@@ -24,11 +24,13 @@ import com.amanapp.tasks.callbacks.ListFolderCallback;
 import com.amanapp.ui.models.FileSerialized;
 import com.amanapp.ui.models.MetadataAdapter;
 import com.dropbox.core.android.Auth;
+import com.dropbox.core.v1.DbxEntry;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
+import com.dropbox.core.v2.files.UploadBuilder;
 
-public class ListFolderActivity extends DropboxActivity implements MetadataAdapter.onMetaDataClick {
+public class ListFolderActivity extends DropboxActivity implements MetadataAdapter.onMetaDataClick, View.OnClickListener {
 
     public final static String EXTRA_PATH = "DESIRED_PATH";
     private final static String TAG = ListFolderActivity.class.getName();
@@ -116,13 +118,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         noDropboxAccountText.setVisibility(View.INVISIBLE);
         getSupportActionBar().setSubtitle((currentPath.equals("") ? "Home" : "Home" + currentPath));
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: Implement addButton click listener for the saved access token
-                Log.v(TAG, "UploadButton has been clicked");
-            }
-        });
+        addButton.setOnClickListener(this);
         return false;
     }
 
@@ -150,7 +146,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     public void onFileClicked(FileMetadata file) {
         Log.v(TAG, "the file " + file.getName() + " has been clicked");
         Intent intent = new Intent(this, FileDetailsActivity.class);
-        intent.putExtra("Serialized_File", new FileSerialized(file));
+        intent.putExtra(FileDetailsActivity.SERIALIZED_FILE, new FileSerialized(file));
         startActivity(intent);
 
         //TODO: Implement onFileClicked listener
@@ -195,5 +191,14 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         } else {
             moveTaskToBack(true);
         }
+    }
+
+    //The onClick listener for the add button
+    @Override
+    public void onClick(View view) {
+        Log.v(TAG, "add button has been clicked");
+        Intent intent = new Intent(this, UploadActivity.class);
+        intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
+        startActivity(intent);
     }
 }
