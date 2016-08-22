@@ -9,10 +9,11 @@
     <dimen name="text_margin">16dp</dimen>
 
     <!--Aman Default dimensions -->
-    <dimen name="cardview_height">60dp</dimen>
+    <dimen name="cardview_height">56dp</dimen>
     <dimen name="image_margin">16dp</dimen>
     <dimen name="button_margin">16dp</dimen>
     <dimen name="button_margin_small">10dp</dimen>
+    <dimen name="icon_size">56dp</dimen>
     <dimen name="icon_size_small">24dp</dimen>
 
 </resources>

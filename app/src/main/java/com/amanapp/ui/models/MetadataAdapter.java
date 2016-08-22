@@ -1,6 +1,7 @@
 package com.amanapp.ui.models;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,9 +36,8 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
         this.clickHandler = click;
     }
 
-    public void setItems(List<Metadata> items) {
-        Log.v(TAG, "Entered setItems: " + (items == null));
-        this.items = Collections.unmodifiableList(new ArrayList<>(items));
+    public void setItems(@NonNull List<Metadata> items) {
+        this.items = Collections.unmodifiableList(items);
         notifyDataSetChanged();
     }
 

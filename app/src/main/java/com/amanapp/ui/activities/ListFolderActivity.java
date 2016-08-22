@@ -21,14 +21,13 @@ import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.cnnections.PicassoClient;
 import com.amanapp.tasks.ListFolderTask;
 import com.amanapp.tasks.callbacks.ListFolderCallback;
+import com.amanapp.ui.models.DividerItemDecoration;
 import com.amanapp.ui.models.FileSerialized;
 import com.amanapp.ui.models.MetadataAdapter;
 import com.dropbox.core.android.Auth;
-import com.dropbox.core.v1.DbxEntry;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
-import com.dropbox.core.v2.files.UploadBuilder;
 
 public class ListFolderActivity extends DropboxActivity implements MetadataAdapter.onMetaDataClick, View.OnClickListener {
 
@@ -73,6 +72,9 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
         filesView = (RecyclerView) findViewById(R.id.filesView);
         filesView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration decoration = new DividerItemDecoration(this, R.drawable.divider);
+        filesView.addItemDecoration(decoration);
+
 
         selectedFile = null;
         Log.v(TAG, "OnCreate finished");

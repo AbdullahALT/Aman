@@ -12,22 +12,25 @@
 
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="@dimen/thumbnail_size"
-            android:layout_height="@dimen/thumbnail_size"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
             android:layout_gravity="center_vertical"
-            android:layout_margin="6dp"
             android:contentDescription="icon"
-            android:scaleType="centerCrop" />
+            android:padding="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_folder_blue_36dp" />
 
         <TextView
             android:id="@+id/itemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
             android:gravity="start"
             android:maxLines="1"
+            android:text="Folder Name"
             android:textAlignment="viewStart"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

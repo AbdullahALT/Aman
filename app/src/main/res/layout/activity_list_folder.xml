@@ -16,7 +16,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/filesView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="8dp" />
 
 
     </LinearLayout>
