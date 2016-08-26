@@ -19,10 +19,10 @@ import android.widget.TextView;
 import com.amanapp.R;
 import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.logics.FileSerialized;
 import com.amanapp.tasks.ListFolderTask;
 import com.amanapp.tasks.callbacks.ListFolderCallback;
 import com.amanapp.ui.models.DividerItemDecoration;
-import com.amanapp.ui.models.FileSerialized;
 import com.amanapp.ui.models.MetadataAdapter;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.files.FileMetadata;
@@ -151,7 +151,6 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         intent.putExtra(FileDetailsActivity.SERIALIZED_FILE, new FileSerialized(file));
         startActivity(intent);
 
-        //TODO: Implement onFileClicked listener
     }
 
     @Override

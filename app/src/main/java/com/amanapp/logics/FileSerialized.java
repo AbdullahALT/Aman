@@ -1,5 +1,10 @@
-package com.amanapp.ui.models;
+package com.amanapp.logics;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.amanapp.AmanApplication;
+import com.amanapp.R;
 import com.dropbox.core.v2.files.FileMetadata;
 
 import java.io.Serializable;
@@ -32,9 +37,10 @@ public class FileSerialized implements Serializable {
         setter();
     }
 
+    //TODO: Move this function to a better class
     private void setter() {
         String parts[] = pathDisplay.split("\\.");
-        extension = parts[1];
+        extension = parts[parts.length - 1].toLowerCase();
         parts = parts[0].split("/");
         int index = parts.length - 2;
         name = parts[index + 1];
@@ -88,5 +94,13 @@ public class FileSerialized implements Serializable {
     private String getString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.US);
         return dateFormat.format(date);
+    }
+
+    //TODO: Move this function to a better class
+    public int getIcon() {
+        Context context = AmanApplication.getContext();
+        Resources resources = context.getResources();
+        int icon = resources.getIdentifier("icon_" + extension, "drawable", context.getPackageName());
+        return (icon != 0) ? icon : R.drawable.ic_insert_drive_file_black_24dp;
     }
 }

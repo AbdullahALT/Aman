@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -22,7 +23,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -31,7 +32,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
                         android:text="Name"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/text_size_default" />
                 </LinearLayout>
 
                 <TextView
@@ -40,9 +41,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="file location"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="@dimen/text_size_default" />
+
             </LinearLayout>
+
         </android.support.v7.widget.CardView>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -53,7 +57,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -62,20 +66,34 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
                         android:text="Type"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/text_size_default" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/file_icon"
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="icon"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_folder_blue_36dp" />
 
                 <TextView
                     android:id="@+id/file_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:drawableStart="@drawable/ic_insert_drive_file_black_24dp"
                     android:text="file type"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="@dimen/text_size_default" />
             </LinearLayout>
+
+            <include layout="@layout/divider" />
+
+
         </android.support.v7.widget.CardView>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -86,7 +104,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -95,7 +113,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
                         android:text="Size"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/text_size_default" />
                 </LinearLayout>
 
                 <TextView
@@ -104,9 +122,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="file type"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="@dimen/text_size_default" />
             </LinearLayout>
+
+            <include layout="@layout/divider" />
+
         </android.support.v7.widget.CardView>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -117,7 +139,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -125,18 +147,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
-                        android:text="Location"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:text="Folder"
+                        android:textSize="@dimen/text_size_default" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/file_location"
+                    android:id="@+id/file_folder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="file location"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:text="file's folder"
+                    android:textSize="@dimen/text_size_default" />
             </LinearLayout>
+
+            <include layout="@layout/divider" />
+
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -148,7 +173,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -157,7 +182,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
                         android:text="Created"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/text_size_default" />
                 </LinearLayout>
 
                 <TextView
@@ -166,9 +191,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="file created"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="@dimen/text_size_default" />
             </LinearLayout>
+
+            <include layout="@layout/divider" />
+
         </android.support.v7.widget.CardView>
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -179,7 +208,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="103dp"
+                    android:layout_width="95dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -188,7 +217,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/text_margin"
                         android:text="Modified"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="@dimen/text_size_default" />
                 </LinearLayout>
 
                 <TextView
@@ -197,8 +226,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="file modified"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="@dimen/text_size_default" />
             </LinearLayout>
+
+            <include layout="@layout/divider" />
+
         </android.support.v7.widget.CardView>
 
         <Button

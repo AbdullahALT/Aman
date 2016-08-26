@@ -1,7 +1,8 @@
-package com.amanapp.cnnections;
+package com.amanapp.tasks;
 
 import android.net.Uri;
 
+import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
@@ -33,6 +34,13 @@ public class FileThumbnailRequestHandler extends RequestHandler {
      * Builds a {@link Uri} for a Dropbox file thumbnail suitable for handling by this handler
      */
     public static Uri buildPicassoUri(FileMetadata file) {
+        return new Uri.Builder()
+                .scheme(SCHEME)
+                .authority(HOST)
+                .path(file.getPathLower()).build();
+    }
+
+    public static Uri buildPicassoUri(FileSerialized file) {
         return new Uri.Builder()
                 .scheme(SCHEME)
                 .authority(HOST)

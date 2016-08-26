@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.ui.models.Operation;
-import com.amanapp.ui.models.UploadOperation;
+import com.amanapp.logics.Operation;
+import com.amanapp.logics.UploadOperation;
 
 public class UploadActivity extends AppCompatActivity {
 

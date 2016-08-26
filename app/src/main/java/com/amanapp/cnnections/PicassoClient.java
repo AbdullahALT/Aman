@@ -3,6 +3,7 @@ package com.amanapp.cnnections;
 import android.content.Context;
 import android.util.Log;
 
+import com.amanapp.tasks.FileThumbnailRequestHandler;
 import com.dropbox.core.v2.DbxClientV2;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;

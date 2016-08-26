@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tales</string>
+    <string name="app_name">Aman App</string>
     <!-- This is taken from dropbox so they identify our application -->
     <string name="app_key">ixpfhawscfbmdyn</string>
     <string name="title_activity_files">Files</string>

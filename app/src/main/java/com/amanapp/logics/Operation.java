@@ -1,4 +1,4 @@
-package com.amanapp.ui.models;
+package com.amanapp.logics;
 
 import android.Manifest;
 import android.app.Activity;

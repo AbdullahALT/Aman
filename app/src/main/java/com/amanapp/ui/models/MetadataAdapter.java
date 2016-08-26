@@ -7,12 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amanapp.R;
-import com.amanapp.cnnections.FileThumbnailRequestHandler;
+import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
@@ -102,22 +101,33 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
             be picked up by DropboxPicassoRequestHandler
              */
             if (item instanceof FileMetadata) {
-                Log.v(TAG, "item is file(Name:" + item.getName() + ")");
-                MimeTypeMap mime = MimeTypeMap.getSingleton();
-                String extension = item.getName().substring(item.getName().indexOf(".") + 1);
-                String type = mime.getMimeTypeFromExtension(extension);
-                if (type != null && type.startsWith("image/")) {
-                    Log.v(TAG, "item file is an image (Name:" + item.getName() + ")");
-                    picasso.load(FileThumbnailRequestHandler.buildPicassoUri((FileMetadata) item))
-                            .placeholder(R.drawable.ic_photo_grey_600_36dp)
-                            .error(R.drawable.ic_photo_grey_600_36dp)
-                            .into(itemImage);
-                } else {
-                    Log.v(TAG, "item file is not an image (Name:" + item.getName() + ")");
-                    picasso.load(R.drawable.ic_insert_drive_file_blue_36dp)
+//                Log.v(TAG, "item is file(Name:" + item.getName() + ")");
+//                MimeTypeMap mime = MimeTypeMap.getSingleton();
+//                String extension = item.getName().toLowerCase().substring(item.getName().indexOf(".") + 1);
+//                String type = mime.getMimeTypeFromExtension(extension);
+//                if (type != null && type.startsWith("image/")) {
+//                    Log.v(TAG, "item file is an image (Name:" + item.getName() + ")");
+//                    picasso.load(FileThumbnailRequestHandler.buildPicassoUri((FileMetadata) item))
+//                            .placeholder(R.drawable.ic_photo_grey_600_36dp)
+//                            .error(R.drawable.ic_photo_grey_600_36dp)
+//                            .into(itemImage);
+//                } else {
+//                    Log.v(TAG, "item file is not an image (Name:" + item.getName() + ")");
+//                    picasso.load(R.drawable.ic_insert_drive_file_blue_36dp)
+//                            .noFade()
+//                            .into(itemImage);
+//                }
+
+
+//                String extension = item.getName().toLowerCase().substring(item.getName().indexOf(".") + 1);
+//                IconFactory factory = new IconFactory(extension);
+//                picasso.load(factory.getIcon(null))
+//                            .noFade()
+//                            .into(itemImage);
+                picasso.load((new FileSerialized((FileMetadata) item).getIcon()))
                             .noFade()
                             .into(itemImage);
-                }
+
             } else if (item instanceof FolderMetadata) {
                 Log.v(TAG, "item is folder(Name:" + item.getName() + ")");
                 picasso.load(R.drawable.ic_folder_blue_36dp)
