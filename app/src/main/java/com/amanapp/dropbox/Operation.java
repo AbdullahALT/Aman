@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.dropbox;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,8 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-
-import com.amanapp.tasks.callbacks.Callback;
 
 /**
  * Created by Abdullah ALT on 8/19/2016.

@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.logics.Operation;
-import com.amanapp.logics.UploadOperation;
+import com.amanapp.dropbox.Operation;
+import com.amanapp.dropbox.UploadOperation;
 
 public class UploadActivity extends AppCompatActivity {
 

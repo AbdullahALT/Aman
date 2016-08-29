@@ -1,58 +1,37 @@
 package com.amanapp.logics;
 
-import android.content.Context;
-import android.content.res.Resources;
-
-import com.amanapp.AmanApplication;
-import com.amanapp.R;
 import com.dropbox.core.v2.files.FileMetadata;
+import com.squareup.picasso.RequestCreator;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 /**
  * Created by Abdullah ALT on 8/18/2016.
  */
 public class FileSerialized implements Serializable {
-    private String name;
-    private long size;
-    private String pathDisplay;
-    private String pathLower;
-    private Date created;
-    private Date modified;
-    private String extension;
-    private String folder;
-    private String rev;
+    protected long size;
+    protected String pathLower;
+    protected String rev;
+    protected FileDates dates;
+    protected FilePath path;
+    protected FileImage image;
 
     public FileSerialized(FileMetadata file) {
         size = file.getSize();
-        pathDisplay = file.getPathDisplay();
         pathLower = file.getPathLower();
-        created = file.getClientModified();
-        modified = file.getServerModified();
         rev = file.getRev();
-        setter();
-    }
-
-    //TODO: Move this function to a better class
-    private void setter() {
-        String parts[] = pathDisplay.split("\\.");
-        extension = parts[parts.length - 1].toLowerCase();
-        parts = parts[0].split("/");
-        int index = parts.length - 2;
-        name = parts[index + 1];
-        folder = ((index < 2) ? "Home" : parts[index]);
+        dates = new FileDates(file.getClientModified(), file.getServerModified());
+        path = new FilePath(file.getPathDisplay());
+        image = new FileImage(getExtension(), pathLower);
     }
 
     public String getName() {
-        return name;
+        return path.getName();
     }
 
     public String getFullName() {
-        return name +"."+ extension;
+        return path.getFullName();
     }
 
     public String getSize() {
@@ -64,7 +43,7 @@ public class FileSerialized implements Serializable {
     }
 
     public String getPathDisplay() {
-        return pathDisplay;
+        return path.getPathDisplay();
     }
 
     public String getPathLower() {
@@ -72,35 +51,31 @@ public class FileSerialized implements Serializable {
     }
 
     public String getCreated() {
-        return getString(created);
+        return dates.getCreated();
     }
 
     public String getModified() {
-        return getString(modified);
+        return dates.getModified();
     }
 
     public String getExtension() {
-        return extension;
+        return path.getExtension();
     }
 
     public String getFolder() {
-        return folder;
+        return path.getFolder();
     }
 
     public String getRev() {
         return rev;
     }
 
-    private String getString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.US);
-        return dateFormat.format(date);
-    }
-
     //TODO: Move this function to a better class
     public int getIcon() {
-        Context context = AmanApplication.getContext();
-        Resources resources = context.getResources();
-        int icon = resources.getIdentifier("icon_" + extension, "drawable", context.getPackageName());
-        return (icon != 0) ? icon : R.drawable.ic_insert_drive_file_black_24dp;
+        return image.getIcon();
+    }
+
+    public RequestCreator getThumbnail() {
+        return image.getThumbnail();
     }
 }

@@ -10,21 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amanapp.AmanApplication;
 import com.amanapp.R;
-import com.amanapp.cnnections.DropboxClientFactory;
-import com.amanapp.cnnections.PicassoClient;
-import com.amanapp.logics.DownloadOperation;
+import com.amanapp.dropbox.Callback;
+import com.amanapp.dropbox.DeleteTask;
+import com.amanapp.dropbox.DownloadOperation;
+import com.amanapp.dropbox.DropboxClient;
+import com.amanapp.dropbox.Operation;
 import com.amanapp.logics.FileSerialized;
-import com.amanapp.logics.Operation;
-import com.amanapp.tasks.DeleteTask;
-import com.amanapp.tasks.FileThumbnailRequestHandler;
-import com.amanapp.tasks.callbacks.DeleteCallback;
-import com.squareup.picasso.Picasso;
+import com.dropbox.core.v2.files.Metadata;
 
 public class FileDetailsActivity extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class FileDetailsActivity extends AppCompatActivity {
         file = ((FileSerialized) intent.getSerializableExtra(SERIALIZED_FILE));
 
         fileImage = (ImageView) findViewById(R.id.file_image);
-        setFileImage(PicassoClient.getPicasso());
+        file.getThumbnail().into(fileImage);
 
         TextView name = (TextView) findViewById(R.id.file_name);
         name.setText(file.getName());
@@ -91,7 +90,28 @@ public class FileDetailsActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Log.v(TAG, "Start Deleting");
-                                        new DeleteTask(DropboxClientFactory.getClient(), new DeleteCallback(FileDetailsActivity.this)).execute(file.getPathLower());
+                                        new DeleteTask(DropboxClient.getClient(),
+                                                new Callback<Metadata>() {
+                                                    @Override
+                                                    public void onTaskComplete(Metadata result) {
+                                                        Log.v(TAG, "The file " + result.getName() + " has been deleted");
+                                                        Toast.makeText(AmanApplication.getContext(),
+                                                                "The file has been deleted",
+                                                                Toast.LENGTH_LONG).show();
+                                                        finish();
+
+                                                    }
+
+                                                    @Override
+                                                    public void onError(Exception e) {
+                                                        Log.v(TAG, "Error deleting the file: " + e.getMessage());
+                                                        Toast.makeText(AmanApplication.getContext(),
+                                                                "An error has occurred",
+                                                                Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+
+                                        ).execute(file.getPathLower());
                                     }
                                 }
                         )
@@ -108,21 +128,4 @@ public class FileDetailsActivity extends AppCompatActivity {
         download.onRequestPermissionsResult(permissions, grantResults, "Downloading");
     }
 
-    private void setFileImage(Picasso picasso) {
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        String extension = file.getExtension();
-        String type = mime.getMimeTypeFromExtension(extension);
-        if (type != null && type.startsWith("image/")) {
-            Log.v(TAG, "item file is an image (Name:" + file.getName() + ")");
-            picasso.load(FileThumbnailRequestHandler.buildPicassoUri(file))
-                    .placeholder(R.drawable.ic_photo_grey_600_36dp)
-                    .error(R.drawable.ic_photo_grey_600_36dp)
-                    .into(fileImage);
-        } else {
-            Log.v(TAG, "item file is not an image (Name:" + file.getName() + ")");
-            picasso.load(R.drawable.ic_insert_drive_file_blue_36dp)
-                    .noFade()
-                    .into(fileImage);
-        }
-    }
 }

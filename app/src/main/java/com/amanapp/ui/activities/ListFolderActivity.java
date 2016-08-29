@@ -15,18 +15,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amanapp.AmanApplication;
 import com.amanapp.R;
-import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.dropbox.Callback;
+import com.amanapp.dropbox.DropboxClient;
+import com.amanapp.dropbox.ListFolderTask;
 import com.amanapp.logics.FileSerialized;
-import com.amanapp.tasks.ListFolderTask;
-import com.amanapp.tasks.callbacks.ListFolderCallback;
 import com.amanapp.ui.models.DividerItemDecoration;
 import com.amanapp.ui.models.MetadataAdapter;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
+import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 
 public class ListFolderActivity extends DropboxActivity implements MetadataAdapter.onMetaDataClick, View.OnClickListener {
@@ -139,8 +142,26 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         dialog.show();
 
         Log.v(TAG, "ListFolderTask started");
-        new ListFolderTask(DropboxClientFactory.getClient(),
-                new ListFolderCallback(this, dialog, metadataAdapter)
+        new ListFolderTask(DropboxClient.getClient(),
+                new Callback<ListFolderResult>() {
+                    @Override
+                    public void onTaskComplete(ListFolderResult result) {
+                        Log.v(TAG, "List Folder Task Completed");
+
+                        dialog.dismiss();
+                        metadataAdapter.setItems(result.getEntries());
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        dialog.dismiss();
+
+                        Toast.makeText(AmanApplication.getContext(),
+                                "An error has occurred",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                }
         ).execute(currentPath);
     }
 

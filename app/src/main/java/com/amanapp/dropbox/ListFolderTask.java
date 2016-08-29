@@ -1,8 +1,7 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
 import android.util.Log;
 
-import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -16,7 +15,6 @@ public class ListFolderTask extends Task<String, Void, ListFolderResult> {
 
     public ListFolderTask(DbxClientV2 dropboxClient, Callback<ListFolderResult> callback) {
         super(dropboxClient, callback);
-        Log.v(TAG, "DropboxClient: " + (dropboxClient == null));
     }
 
     @Override

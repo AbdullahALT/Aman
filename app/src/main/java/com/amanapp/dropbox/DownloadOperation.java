@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.dropbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.amanapp.cnnections.DropboxClientFactory;
-import com.amanapp.tasks.DownloadFileTask;
+import com.amanapp.logics.FileSerialized;
 
 import java.io.File;
 
@@ -29,7 +28,7 @@ public class DownloadOperation extends Operation<File> {
     protected void startAction() {
         new DownloadFileTask(
                 context,
-                DropboxClientFactory.getClient(),
+                DropboxClient.getClient(),
                 this
         ).execute(file);
         Log.v(TAG, "Start the Download File Task");

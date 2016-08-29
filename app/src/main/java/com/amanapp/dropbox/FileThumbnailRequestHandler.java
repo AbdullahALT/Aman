@@ -1,4 +1,4 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
 import android.net.Uri;
 
@@ -45,6 +45,13 @@ public class FileThumbnailRequestHandler extends RequestHandler {
                 .scheme(SCHEME)
                 .authority(HOST)
                 .path(file.getPathLower()).build();
+    }
+
+    public static Uri buildPicassoUri(String pathLower) {
+        return new Uri.Builder()
+                .scheme(SCHEME)
+                .authority(HOST)
+                .path(pathLower).build();
     }
 
     @Override

@@ -1,9 +1,8 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.v2.DbxClientV2;
 
 /**

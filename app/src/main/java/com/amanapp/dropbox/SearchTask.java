@@ -1,6 +1,5 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
-import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.SearchResult;
@@ -17,11 +16,11 @@ public class SearchTask extends Task<String, Void, SearchResult> {
 
     @Override
     protected SearchResult doInBackground(String... params) {
-        try{
+        try {
             String path = params[0];
             String query = params[1];
             return dropboxClient.files().search(path, query);
-        } catch (DbxException e){
+        } catch (DbxException e) {
             exception = e;
         }
         return null;

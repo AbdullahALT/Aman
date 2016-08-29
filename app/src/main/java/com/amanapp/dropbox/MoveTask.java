@@ -1,6 +1,5 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
-import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.Metadata;
@@ -19,7 +18,7 @@ public class MoveTask extends Task<String, Void, Metadata> {
             String fromPath = params[0];
             String toPath = params[1];
             return dropboxClient.files().move(fromPath, toPath);
-        } catch (DbxException e){
+        } catch (DbxException e) {
             exception = e;
         }
 

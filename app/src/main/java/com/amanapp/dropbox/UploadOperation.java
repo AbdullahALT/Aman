@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.dropbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.cnnections.DropboxClientFactory;
-import com.amanapp.tasks.UploadFileTask;
 import com.dropbox.core.v2.files.FileMetadata;
 
 /**
@@ -29,7 +27,7 @@ public class UploadOperation extends Operation<FileMetadata> {
 
     @Override
     protected void startAction() {
-        new UploadFileTask(context, DropboxClientFactory.getClient(), this).execute(path, name, uri);
+        new UploadFileTask(context, DropboxClient.getClient(), this).execute(path, name, uri);
     }
 
     @Override

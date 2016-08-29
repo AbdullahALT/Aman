@@ -1,4 +1,4 @@
-package com.amanapp.tasks;
+package com.amanapp.dropbox;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.amanapp.logics.FileSerialized;
-import com.amanapp.tasks.callbacks.Callback;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 

@@ -4,8 +4,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.amanapp.cnnections.DropboxClientFactory;
 import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.dropbox.DropboxClient;
 
 
 /**
@@ -62,8 +62,8 @@ public abstract class DropboxActivity extends AppCompatActivity {
 
     private void initAndLoadData(String accessToken) {
         Log.v(TAG, "Entered initAndLoadData");
-        DropboxClientFactory.init(accessToken);
-        PicassoClient.init(getApplicationContext(), DropboxClientFactory.getClient());
+        DropboxClient.init(accessToken);
+        PicassoClient.init(getApplicationContext(), DropboxClient.getClient());
         loadData();
     }
 

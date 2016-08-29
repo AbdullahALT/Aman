@@ -1,4 +1,4 @@
-package com.amanapp.cnnections;
+package com.amanapp.dropbox;
 
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.http.OkHttp3Requestor;
@@ -7,7 +7,7 @@ import com.dropbox.core.v2.DbxClientV2;
 /**
  * Singleton instance of {@link DbxClientV2} and friends
  */
-public class DropboxClientFactory {
+public class DropboxClient {
 
     private static DbxClientV2 sDbxClient;
 
