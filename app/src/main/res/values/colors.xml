@@ -7,4 +7,7 @@
     <color name="dbx_color_control_activated">@color/dbx_primary</color>
     <color name="dbx_color_control_highlight">@color/dbx_primary_dark</color>
     <color name="dbx_color_switch_thumbNormal">@color/dbx_primary</color>
+
+    //custom colors
+    <color name="aman_color_assent">#ec3ed5</color>
 </resources>

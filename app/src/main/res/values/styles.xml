@@ -8,7 +8,11 @@
         <item name="colorControlActivated">@color/dbx_color_control_activated</item>
         <item name="colorControlHighlight">@color/dbx_color_control_highlight</item>
         <item name="colorSwitchThumbNormal">@color/dbx_color_switch_thumbNormal</item>
-        <item name="colorAccent">@color/dbx_primary</item>
+        <item name="colorAccent">@color/aman_color_assent</item>
+
+        //custom
+        <item name="colorButtonNormal">@color/aman_color_assent</item>
+        <item name="android:textColorPrimary">#ffffff</item>
     </style>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored"></style>
