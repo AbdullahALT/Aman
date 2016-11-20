@@ -14,6 +14,7 @@
     <!-- Strings related to login and register -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password </string>
+    <string name="prompt_password_conf">Confirm Password</string>
     <string name="action_sign_in">Sign in with existing account</string>
     <string name="action_register">Register a new account</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -21,4 +22,6 @@
     <string name="error_connect_to__server">Couldn\'t connect to the server</string>
     <string name="error_email_unavailable">Email has already been taken</string>
     <string name="dialog_logging_in">Logging in...</string>
+    <string name="error_confirm_password">Dosn\'t match the password</string>
+    <string name="dialog_registering">Please wait...</string>
 </resources>

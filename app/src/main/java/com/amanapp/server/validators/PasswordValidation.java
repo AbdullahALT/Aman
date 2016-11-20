@@ -12,8 +12,9 @@ class PasswordValidation extends Validation {
     @Override
     protected void setValidators() {
         validators = new Validator[]{
-                new CapitalLetterValidator(), new SmallLetterValidator(),
-                new NumberValidator(), new LengthValidator(8), new BlackListValidator()
+                new EmptyStringValidator(), new LengthValidator(8), new CapitalLetterValidator(), new SmallLetterValidator(),
+                new NumberValidator(), new BlackListValidator()
+
         };
     }
 }

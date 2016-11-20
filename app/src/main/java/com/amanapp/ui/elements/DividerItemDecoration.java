@@ -1,4 +1,4 @@
-package com.amanapp.ui.models;
+package com.amanapp.ui.elements;
 
 import android.content.Context;
 import android.content.res.Resources;

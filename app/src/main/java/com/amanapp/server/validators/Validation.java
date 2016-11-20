@@ -21,7 +21,7 @@ public abstract class Validation {
      * @param message: the message to be validate
      */
     public Validation(String message) {
-        this.message = message;
+        this.message = message.trim();
         this.errorMessages = new LinkedList<>();
         setValidators();
         validate();

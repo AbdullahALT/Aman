@@ -12,7 +12,7 @@
 
         //custom
         <item name="colorButtonNormal">@color/aman_color_assent</item>
-        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorPrimary">#000000</item>
     </style>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored"></style>

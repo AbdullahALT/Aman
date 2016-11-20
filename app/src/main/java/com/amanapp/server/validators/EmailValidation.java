@@ -12,7 +12,8 @@ class EmailValidation extends Validation {
     @Override
     protected void setValidators() {
         validators = new Validator[]{
-                new EmailAvailableValidator(), new EmailPatteernValidator()
+                new EmptyStringValidator(), new EmailPatteernValidator()
         };
     }
+
 }
