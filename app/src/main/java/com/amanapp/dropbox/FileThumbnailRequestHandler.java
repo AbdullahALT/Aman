@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Example Picasso request handler that gets the thumbnail url for a dropbox path
  * Only handles urls like dropbox://dropbox/[path_to_file]
- * See {@link com.amanapp.ui.models.MetadataAdapter} for usage
+ * See {@link com.amanapp.ui.elements.MetadataAdapter} for usage
  */
 public class FileThumbnailRequestHandler extends RequestHandler {
 

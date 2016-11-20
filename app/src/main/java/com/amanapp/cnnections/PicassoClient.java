@@ -13,15 +13,18 @@ import com.squareup.picasso.Picasso;
  */
 public class PicassoClient {
     private static final String TAG = PicassoClient.class.getName();
+
     private static Picasso sPicasso;
 
     public static void init(Context context, DbxClientV2 dbxClient) {
 
         // Configure picasso to know about special thumbnail requests
-        sPicasso = new Picasso.Builder(context)
-                .downloader(new OkHttpDownloader(context))
-                .addRequestHandler(new FileThumbnailRequestHandler(dbxClient))
-                .build();
+        if(sPicasso == null) {
+            sPicasso = new Picasso.Builder(context)
+                    .downloader(new OkHttpDownloader(context))
+                    .addRequestHandler(new FileThumbnailRequestHandler(dbxClient))
+                    .build();
+        }
 
         Log.v(TAG, "picasso is null: " + (sPicasso == null));
     }
