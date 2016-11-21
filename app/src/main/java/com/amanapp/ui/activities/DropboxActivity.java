@@ -1,48 +1,53 @@
 package com.amanapp.ui.activities;
 
-import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.dropbox.AccessManager;
 import com.amanapp.dropbox.DropboxClient;
-
+import com.amanapp.logics.CurrentUser;
 
 /**
- * Base class for Activities that require auth tokens
- * Will redirect to auth flow if needed
+ * Created by Abdullah ALT on 11/21/2016.
  */
 public abstract class DropboxActivity extends AppCompatActivity {
+    private AccessManager accessManager;
 
-    private final static String TAG = DropboxActivity.class.getName();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        accessManager = new AccessManager(DropboxActivity.this);
+    }
 
-    /*
-     * SharedPreferences is a way to store persistent data using pair keys. what this method do is:
-     * OnResume, get the shared preferences then get the stored access token from it, if there is
-     * no access token start the authentication process, and if the access token's stored
-     * initiate the application
-     */
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v(TAG, "OnResume");
-
-        SharedPreferences prefs = getSharedPreferences("dropbox-sample", MODE_PRIVATE);
-        String accessToken = prefs.getString("access-token", null);
+        String accessToken = accessManager.getUserAccessToken(CurrentUser.get());
         if (accessToken == null) {
-            Log.v(TAG, "accessToken is not saved in the shared preferences");
             onNotSavedAccessToken();
         } else {
-            Log.v(TAG, "accessToken is saved in the shared preferences");
             onSavedAccessToken();
             initAndLoadData(accessToken);
         }
     }
 
-    protected void saveAccessToken(String accessToken) {
-        SharedPreferences prefs = getSharedPreferences("dropbox-sample", MODE_PRIVATE);
-        prefs.edit().putString("access-token", accessToken).apply();
+    private void initAndLoadData(String accessToken) {
+        DropboxClient.init(accessToken);
+        PicassoClient.init(getApplicationContext(), DropboxClient.getClient());
+        loadData();
     }
+
+    protected void saveAccessToken(String accessToken) {
+        accessManager.setUserAccessToken(CurrentUser.get(), accessToken);
+    }
+
+    protected boolean hasToken() {
+        return accessManager.hasToken(CurrentUser.get());
+    }
+
+    protected abstract void loadData();
 
     /**
      * the set of actions to be done in case there is an access token
@@ -59,20 +64,4 @@ public abstract class DropboxActivity extends AppCompatActivity {
     protected boolean onNotSavedAccessToken() {
         return false;
     }
-
-    private void initAndLoadData(String accessToken) {
-        Log.v(TAG, "Entered initAndLoadData");
-        DropboxClient.init(accessToken);
-        PicassoClient.init(getApplicationContext(), DropboxClient.getClient());
-        loadData();
-    }
-
-    protected abstract void loadData();
-
-    protected boolean hasToken() {
-        SharedPreferences prefs = getSharedPreferences("dropbox-sample", MODE_PRIVATE);
-        String accessToken = prefs.getString("access-token", null);
-        return accessToken != null;
-    }
-
 }

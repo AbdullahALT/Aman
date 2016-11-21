@@ -56,7 +56,6 @@ public abstract class ServerRequest {
         }
     }
 
-    //TODO: move RequestType to another class and change the factory to be looped across values() then invoke the paired method
     public enum RequestType {
         LOG_IN, CREATE_USER, GET_SALT, EMAIL_AVAILABLE
     }

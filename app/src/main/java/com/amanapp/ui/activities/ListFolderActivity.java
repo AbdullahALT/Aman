@@ -32,7 +32,7 @@ import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 
-public class ListFolderActivity extends DropboxActivity2 implements MetadataAdapter.onMetaDataClick, View.OnClickListener {
+public class ListFolderActivity extends DropboxActivity implements MetadataAdapter.onMetaDataClick, View.OnClickListener {
 
     public final static String EXTRA_PATH = "DESIRED_PATH";
     private final static String TAG = ListFolderActivity.class.getName();
