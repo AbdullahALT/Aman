@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.amanapp.AmanApplication;
 import com.amanapp.R;
+import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
@@ -52,6 +53,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initViews();
         initListeners();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     protected void initViews() {
@@ -170,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             AmanResponse result = response.body();
 
             if (result.getSuccess() == 1) {
+                CurrentUser.set(email);
                 toListFolder();
             } else {
                 Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
