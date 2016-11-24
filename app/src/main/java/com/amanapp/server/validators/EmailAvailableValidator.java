@@ -13,7 +13,7 @@ import retrofit2.Response;
 /**
  * Created by Abdullah ALT on 11/13/2016.
  */
-class EmailAvailableValidator implements Validator {
+final class EmailAvailableValidator implements Validator {
 
     private static final String TAG = EmailAvailableValidator.class.getName();
 

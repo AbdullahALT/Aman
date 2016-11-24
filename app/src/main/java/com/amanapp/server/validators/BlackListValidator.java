@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Abdullah ALT on 11/13/2016.
  */
-class BlackListValidator implements Validator {
+final class BlackListValidator implements Validator {
 
     //TODO: Make initBlackList in another class or any where else
     //TODO: Add more elements to the list and make it adaptable (easy to change and expandable)
