@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -51,13 +52,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server_form_layout);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        setActionBarTitle();
         initViews();
         initListeners();
     }
 
     @Override
     public void onBackPressed() {
+        //Override the onBackPressed and make it nothing to prevent user from going back
+    }
 
+    protected void setActionBarTitle() {
+        //noinspection ConstantConditions
+        getSupportActionBar().setTitle("Login");
     }
 
     protected void initViews() {
@@ -161,9 +171,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
-    protected final void toListFolder() {
+    protected void toNextActivity() {
         finish();
-        startActivity(new Intent(LoginActivity.this, ListFolderActivity.class));
+        startActivity(new Intent(LoginActivity.this, Authentication.class));
     }
 
     private void sendRequest() {
@@ -177,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             if (result.getSuccess() == 1) {
                 CurrentUser.set(email);
-                toListFolder();
+                toNextActivity();
             } else {
                 Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
             }

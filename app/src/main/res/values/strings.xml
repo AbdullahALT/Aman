@@ -24,4 +24,8 @@
     <string name="dialog_logging_in">Logging in...</string>
     <string name="error_confirm_password">Dosn\'t match the password</string>
     <string name="dialog_registering">Please wait...</string>
+    <string name="authentication_sync_google_message">Send To Google Authenticator</string>
+    <string name="authentication_scanned_message">I Have Scanned The QR Code</string>
+    <string name="entering_code_instructions">Please enter the 6 digit code that shows in your authenticator application</string>
+    <string name="submit_code">submit code</string>
 </resources>

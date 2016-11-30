@@ -21,6 +21,12 @@ public class RegisterActivity extends LoginActivity {
     }
 
     @Override
+    protected void setActionBarTitle() {
+        //noinspection ConstantConditions
+        getSupportActionBar().setTitle("Register");
+    }
+
+    @Override
     protected void initViews() {
         super.initViews();
         confirmationView = (EditText) findViewById(R.id.passwordConformation);
@@ -74,6 +80,11 @@ public class RegisterActivity extends LoginActivity {
         return true;
     }
 
+    @Override
+    protected void toNextActivity() {
+        finish();
+        startActivity(new Intent(RegisterActivity.this, QrCode.class));
+    }
 
     //    @Override
 //    protected void initServerRequest() {
