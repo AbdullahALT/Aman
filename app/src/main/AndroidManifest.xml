@@ -48,7 +48,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.QrCode" />
-        <activity android:name=".ui.activities.Authentication"></activity>
+        <activity android:name=".ui.activities.Authentication" />
+        <activity android:name=".ui.activities.QrCode2" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@
     <dimen name="cardview_height">56dp</dimen>
     <dimen name="image_margin">16dp</dimen>
     <dimen name="button_margin">16dp</dimen>
+    <dimen name="global_margin">16dp</dimen>
     <dimen name="button_margin_small">10dp</dimen>
     <dimen name="icon_size">56dp</dimen>
     <dimen name="icon_size_small">24dp</dimen>

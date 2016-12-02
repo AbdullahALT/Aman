@@ -12,8 +12,8 @@ import retrofit2.Callback;
  */
 //TODO: Change ServerConnect class name?
 public class ServerConnect {
-    ServerRequest request;
-    Map<String, String> queries;
+    protected ServerRequest request;
+    protected Map<String, String> queries;
 
     public ServerConnect() {
         queries = new HashMap<>();

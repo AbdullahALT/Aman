@@ -20,8 +20,9 @@
 
         <EditText
             android:id="@+id/authentication_code"
+            style="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/code_height"
+            android:layout_height="wrap_content"
             android:digits="1234567890"
             android:ems="10"
             android:inputType="number"

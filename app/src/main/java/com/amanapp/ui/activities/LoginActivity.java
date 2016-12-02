@@ -40,10 +40,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     protected Button firstButton;
     protected Button secondButton;
+
     protected ProgressDialog dialog;
     protected ServerConnect connect;
+
     protected ServerRequest.RequestType requestType;
     protected View focusView;
+
     private Validation emailValidation;
     private Validation passwordValidation;
 

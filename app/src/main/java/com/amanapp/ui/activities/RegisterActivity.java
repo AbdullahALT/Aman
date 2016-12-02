@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.amanapp.R;
+import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.server.Requests.ServerRequest;
 
 public class RegisterActivity extends LoginActivity {
@@ -14,6 +15,8 @@ public class RegisterActivity extends LoginActivity {
     protected EditText confirmationView;
 
     protected String confirmation;
+
+    private String authsecret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class RegisterActivity extends LoginActivity {
         super.setValues();
         confirmation = confirmationView.getText().toString();
         requestType = ServerRequest.RequestType.CREATE_USER;
+        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
     }
 
     //TODO: Random Salt Operation!
@@ -60,6 +64,7 @@ public class RegisterActivity extends LoginActivity {
     protected void addQueries() {
         super.addQueries();
         connect.addQuery("salt", "defaultSalt");
+        connect.addQuery("authsecret", authsecret);
     }
 
     @NonNull
@@ -83,39 +88,10 @@ public class RegisterActivity extends LoginActivity {
     @Override
     protected void toNextActivity() {
         finish();
-        startActivity(new Intent(RegisterActivity.this, QrCode.class));
+        Intent intent = new Intent(RegisterActivity.this, QrCode2.class);
+        intent.putExtra(QrCode2.EXTRA_EMAIL, email);
+        intent.putExtra(QrCode2.EXTRA_SECRET, authsecret);
+        startActivity(intent);
     }
 
-    //    @Override
-//    protected void initServerRequest() {
-//        emailView.setError(null);
-//        passwordView.setError(null);
-//        confirmationView.setError(null);
-//
-//        String email = emailView.getText().toString();
-//        String password = passwordView.getText().toString();
-//        String confirmation = confirmationView.getText().toString();
-//
-//        View focusView = null;
-//
-//        Validation emailValidation = Validation.Factory(email, Validation.ValidationType.EMAIL);
-//        Validation passwordValidation = Validation.Factory(password, Validation.ValidationType.PASSWORD);
-//
-//        if(!emailValidation.isValid()){
-//            emailView.setError(emailValidation.getErrorMessages().get(0));
-//            focusView = emailView;
-//        } else if (!passwordValidation.isValid()){
-//            passwordView.setError(passwordValidation.getErrorMessages().get(0));
-//            focusView = passwordView;
-//        } else if(!password.equals(confirmation)){
-//            confirmationView.setError(getString(R.string.error_confirm_password));
-//            focusView = confirmationView;
-//        }
-//
-//        if(focusView != null){
-//            focusView.requestFocus();
-//        } else {
-//            connect();
-//        }
-//    }
 }

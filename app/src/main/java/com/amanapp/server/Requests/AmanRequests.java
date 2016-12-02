@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 interface AmanRequests {
     @FormUrlEncoded
     @POST("create_user.php")
-    Call<AmanResponse> createUser(@Field("email") String email, @Field("password") String password, @Field("salt") String salt);
+    Call<AmanResponse> createUser(@Field("email") String email, @Field("password") String password, @Field("salt") String salt, @Field("authsecret") String authSecret);
 
     @FormUrlEncoded
     @POST("log_in.php")
