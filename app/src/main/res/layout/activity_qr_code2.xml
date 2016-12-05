@@ -8,11 +8,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -21,12 +23,28 @@
 
             <include layout="@layout/card_register_greetings" />
 
-            <include layout="@layout/card_qr_code" />
+            <include layout="@layout/card_qr_code2" />
 
             <include layout="@layout/card_qr_instructions" />
 
-
         </LinearLayout>
 
+
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/proceed_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/buttonBarColor"
+            android:text="Proceed To Your Account"
+            android:textColor="#FFF"
+            android:textSize="@dimen/text_size_default" />
+
+    </RelativeLayout>
 </LinearLayout>
