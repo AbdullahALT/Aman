@@ -19,5 +19,6 @@
     <dimen name="text_size_default">16sp</dimen>
     <dimen name="code_height">75dp</dimen>
     <dimen name="global_padding_small">8dp</dimen>
+    <dimen name="global_margin_small">8dp</dimen>
 
 </resources>
