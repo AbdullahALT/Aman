@@ -93,9 +93,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.first_button:
+                Log.d(TAG, "first button clicked");
                 initServerRequest();
                 break;
             case R.id.second_button:
+                Log.d(TAG, "second button clicked");
                 switchActivity();
                 break;
         }
@@ -138,16 +140,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
         requestType = ServerRequest.RequestType.LOG_IN;
+        Log.d(TAG, "email= [" + email + "], password= [" + password + "], request type= [" + requestType + "]");
     }
 
     protected boolean validate() {
         if (!emailValidation.isValid()) {
             emailView.setError(emailValidation.getErrorMessages().get(0));
             focusView = emailView;
+            Log.d(TAG, "invalid email");
             return false;
         } else if (!passwordValidation.isValid()) {
             passwordView.setError(passwordValidation.getErrorMessages().get(0));
             focusView = passwordView;
+            Log.d(TAG, "invalid password");
             return false;
         }
         return true;

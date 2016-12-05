@@ -3,7 +3,9 @@
     android:id="@+id/greetings_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/global_margin">
+    android:layout_marginBottom="@dimen/global_margin"
+    android:elevation="4dp"
+    android:translationZ="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"

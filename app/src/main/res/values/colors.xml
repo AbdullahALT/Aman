@@ -10,4 +10,7 @@
 
     //custom colors
     <color name="aman_color_assent">#ec3ed5</color>
+
+    //One Time Use Color
+    <color name="buttonBarColor">#9c9696</color>
 </resources>

@@ -81,10 +81,12 @@ public class QrCode2 extends AppCompatActivity {
         instructionCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TransitionManager.beginDelayedTransition(instructionCard);
+
                 if (instructionDetails.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(instructionCard);
                     instructionDetails.setVisibility(View.VISIBLE);
                 } else {
+                    TransitionManager.beginDelayedTransition(instructionCard);
                     instructionDetails.setVisibility(View.GONE);
                 }
             }
