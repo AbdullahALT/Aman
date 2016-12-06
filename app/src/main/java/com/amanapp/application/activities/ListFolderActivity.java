@@ -209,10 +209,8 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
     @Override
     public void onBackPressed() {
-        if (hasToken()) {
+        if (!currentPath.equals("")) {
             super.onBackPressed();
-        } else {
-            moveTaskToBack(true);
         }
     }
 

@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initServerRequest() {
+        Log.d(TAG, "initServerRequest()");
         resetErrors();
 
         setValues();
@@ -123,6 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void request() {
+        Log.d(TAG, "request()");
         connect = new ServerConnect();
         addQueries();
 
@@ -132,11 +134,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected void resetErrors() {
+        Log.d(TAG, "resetErrors()");
         emailView.setError(null);
         passwordView.setError(null);
     }
 
     protected void setValues() {
+        Log.d(TAG, "setValues()");
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
         requestType = ServerRequest.RequestType.LOG_IN;
@@ -144,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected boolean validate() {
+        Log.d(TAG, "validate()");
         if (!emailValidation.isValid()) {
             emailView.setError(emailValidation.getErrorMessages().get(0));
             focusView = emailView;
@@ -159,9 +164,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showDialog() {
+        Log.d(TAG, "showDialog");
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage(dialogMessage());
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -171,7 +179,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected void addQueries() {
+        Log.d(TAG, "addQueries()");
         connect.addQuery("email", email).addQuery("password", password);
+        Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
     }
 
     protected void switchActivity() {
@@ -185,6 +195,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void sendRequest() {
+        Log.d(TAG, "sendRequest()");
         connect.request(requestType, this);
     }
 
@@ -200,12 +211,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
             }
 
-            Log.v(TAG, "successful response");
-            Log.v(TAG, response.body().getMessage());
+            Log.d(TAG, "successful response");
+            Log.d(TAG, response.body().getMessage());
 
         } else {
-            Log.v(TAG, "unsuccessful response");
-            Log.v(TAG, "code: " + response.code());
+            Log.d(TAG, "unsuccessful response");
+            Log.d(TAG, "code: " + response.code());
 
             Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
         }
@@ -215,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onFailure(Call<AmanResponse> call, Throwable t) {
         Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-        Log.v(TAG, "Network error");
+        Log.d(TAG, "Network error");
 
         t.printStackTrace();
         dialog.dismiss();

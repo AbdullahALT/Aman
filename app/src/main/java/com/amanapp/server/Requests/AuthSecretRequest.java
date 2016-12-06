@@ -7,16 +7,16 @@ import com.amanapp.server.exceptions.RequiredQueryException;
 import java.util.Map;
 
 /**
- * Created by Abdullah ALT on 11/15/2016.
+ * Created by Abdullah ALT on 12/6/2016.
  */
-class LoginRequest extends ServerRequest {
+public class AuthSecretRequest extends ServerRequest {
 
     @Override
     protected void checkQuery(Map<String, String> query) {
-        if (query.size() != 2) {
-            throw new InvalidNumberOfParametersException("sendRequest::LoginRequest accepts 2 parameters " +
-                    " in the order [email, password]");
-        } else if (!query.containsKey("email") || !query.containsKey("password")) {
+        if (query.size() != 1) {
+            throw new InvalidNumberOfParametersException("sendRequest::AuthSecretRequest accepts 1 parameter " +
+                    " in the order [email]");
+        } else if (!query.containsKey("email")) {
             throw new RequiredQueryException();
         }
     }
@@ -24,6 +24,6 @@ class LoginRequest extends ServerRequest {
     @Override
     void initRequest(Map<String, String> query) {
         AmanRequests requests = RetrofitClient.getClient().create(AmanRequests.class);
-        call = requests.login(query.get("email"), query.get("password"));
+        call = requests.getAuthSecret(query.get("email"));
     }
 }

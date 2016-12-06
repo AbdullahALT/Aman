@@ -27,4 +27,8 @@ interface AmanRequests {
     @FormUrlEncoded
     @POST("email_availability.php")
     Call<AmanResponse> isEmailAvailable(String email);
+
+    @FormUrlEncoded
+    @POST("get_authsecret.php")
+    Call<AmanResponse> getAuthSecret(@Field("email") String email);
 }

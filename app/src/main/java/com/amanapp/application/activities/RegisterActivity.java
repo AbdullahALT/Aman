@@ -3,6 +3,7 @@ package com.amanapp.application.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -57,6 +58,7 @@ public class RegisterActivity extends LoginActivity {
         confirmation = confirmationView.getText().toString();
         requestType = ServerRequest.RequestType.CREATE_USER;
         authsecret = new TwoFactorAuthUtil().generateBase32Secret();
+        Log.d(TAG, "confirmation= [" + confirmation + "], request type= [" + requestType + "], authentication secret= [" + authsecret + "]");
     }
 
     //TODO: Random Salt Operation!
@@ -65,6 +67,7 @@ public class RegisterActivity extends LoginActivity {
         super.addQueries();
         connect.addQuery("salt", "defaultSalt");
         connect.addQuery("authsecret", authsecret);
+        Log.d(TAG, "salt= [defaultSalt], authentication secret =[" + authsecret + "]");
     }
 
     @NonNull

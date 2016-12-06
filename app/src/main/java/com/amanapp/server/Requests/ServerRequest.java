@@ -25,6 +25,8 @@ public abstract class ServerRequest {
                 return new getSaltRequest();
             case EMAIL_AVAILABLE:
                 return new EmailAvailableRequest();
+            case GET_AUTHSECRET:
+                return new AuthSecretRequest();
             default:
                 throw new ForcedConstantParameterException("ServerRequest's Factory accepts only its public static constants or their " +
                         "corresponding values");
@@ -57,7 +59,7 @@ public abstract class ServerRequest {
     }
 
     public enum RequestType {
-        LOG_IN, CREATE_USER, GET_SALT, EMAIL_AVAILABLE
+        LOG_IN, CREATE_USER, GET_SALT, EMAIL_AVAILABLE, GET_AUTHSECRET
     }
 
 }
