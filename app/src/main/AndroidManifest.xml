@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".AmanApplication"
+        android:name=".application.AmanApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.ListFolderActivity" />
+        <activity android:name=".application.activities.ListFolderActivity" />
         <activity
             android:name="com.dropbox.core.android.AuthActivity"
             android:configChanges="orientation|keyboard"
@@ -30,26 +30,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.FileDetailsActivity"
+            android:name=".application.activities.FileDetailsActivity"
             android:label="@string/title_activity_file_details"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activities.UploadActivity" />
+        <activity android:name=".application.activities.UploadActivity" />
         <activity
-            android:name=".ui.activities.RegisterActivity"
+            android:name=".application.activities.RegisterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".application.activities.LoginActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".application.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.QrCode" />
-        <activity android:name=".ui.activities.Authentication" />
-        <activity android:name=".ui.activities.QrCode2" />
+        <activity android:name=".application.activities.QrCode" />
+        <activity android:name=".application.activities.Authentication" />
+        <activity android:name=".application.activities.QrCode2" />
     </application>
 
 </manifest>

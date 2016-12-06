@@ -1,4 +1,4 @@
-package com.amanapp;
+package com.amanapp.application;
 
 import android.app.Application;
 import android.content.Context;

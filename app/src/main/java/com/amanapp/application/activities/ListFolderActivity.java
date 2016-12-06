@@ -1,4 +1,4 @@
-package com.amanapp.ui.activities;
+package com.amanapp.application.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,15 +17,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amanapp.AmanApplication;
 import com.amanapp.R;
+import com.amanapp.application.AmanApplication;
+import com.amanapp.application.elements.DividerItemDecoration;
+import com.amanapp.application.elements.MetadataAdapter;
 import com.amanapp.cnnections.PicassoClient;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.ListFolderTask;
 import com.amanapp.logics.FileSerialized;
-import com.amanapp.ui.elements.DividerItemDecoration;
-import com.amanapp.ui.elements.MetadataAdapter;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;

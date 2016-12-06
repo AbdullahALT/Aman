@@ -1,4 +1,4 @@
-package com.amanapp.ui.activities;
+package com.amanapp.application.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.amanapp.AmanApplication;
 import com.amanapp.R;
+import com.amanapp.application.AmanApplication;
 import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;

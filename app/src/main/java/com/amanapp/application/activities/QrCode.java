@@ -1,4 +1,4 @@
-package com.amanapp.ui.activities;
+package com.amanapp.application.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.amanapp.AmanApplication;
 import com.amanapp.R;
+import com.amanapp.application.AmanApplication;
 import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.logics.CurrentUser;
 import com.squareup.picasso.Picasso;

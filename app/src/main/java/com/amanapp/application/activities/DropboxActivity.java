@@ -1,4 +1,4 @@
-package com.amanapp.ui.activities;
+package com.amanapp.application.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

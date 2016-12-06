@@ -1,4 +1,4 @@
-package com.amanapp.ui.activities;
+package com.amanapp.application.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amanapp.AmanApplication;
 import com.amanapp.R;
+import com.amanapp.application.AmanApplication;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DownloadOperation;

@@ -1,4 +1,4 @@
-package com.amanapp.ui.elements;
+package com.amanapp.application.elements;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
