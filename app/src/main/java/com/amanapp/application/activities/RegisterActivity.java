@@ -10,8 +10,10 @@ import android.widget.EditText;
 import com.amanapp.R;
 import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.server.Requests.ServerRequest;
+import com.amanapp.server.ServerConnect;
+import com.amanapp.server.ServerTask;
 
-public class RegisterActivity extends LoginActivity {
+public class RegisterActivity extends LoginActivity implements ServerTask.Callback {
 
     protected EditText confirmationView;
 
@@ -56,25 +58,30 @@ public class RegisterActivity extends LoginActivity {
     protected void setValues() {
         super.setValues();
         confirmation = confirmationView.getText().toString();
-        requestType = ServerRequest.RequestType.CREATE_USER;
         authsecret = new TwoFactorAuthUtil().generateBase32Secret();
-        Log.d(TAG, "confirmation= [" + confirmation + "], request type= [" + requestType + "], authentication secret= [" + authsecret + "]");
+        Log.d(TAG, "confirmation= [" + confirmation + "], authentication secret= [" + authsecret + "]");
     }
 
-    //TODO: Random Salt Operation!
     @Override
-    protected void addQueries() {
-        super.addQueries();
-        connect.addQuery("salt", "defaultSalt");
-        connect.addQuery("authsecret", authsecret);
-        Log.d(TAG, "salt= [defaultSalt], authentication secret =[" + authsecret + "]");
+    protected void setServerTask() {
+        serverTask = new ServerTask(RegisterActivity.this, ServerRequest.RequestType.CREATE_USER, RegisterActivity.this) {
+            @Override
+            protected void addQueries(ServerConnect connect) {
+                Log.d(TAG, "addQueries()");
+                connect.addQuery("email", email).addQuery("password", password);
+                connect.addQuery("salt", "defaultSalt");
+                connect.addQuery("authsecret", authsecret);
+                Log.d(TAG, "email= [" + email + "], password= [" + password + "], authsecret=[ " + authsecret + "]");
+            }
+        };
     }
 
     @NonNull
     @Override
-    protected CharSequence dialogMessage() {
+    protected String dialogMessage() {
         return getString(R.string.dialog_registering);
     }
+
 
     @Override
     protected boolean validate() {

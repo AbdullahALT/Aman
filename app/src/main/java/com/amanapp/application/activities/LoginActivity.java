@@ -1,6 +1,5 @@
 package com.amanapp.application.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,16 +18,16 @@ import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
+import com.amanapp.server.ServerTask;
 import com.amanapp.server.validators.Validation;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * Created by Abdullah ALT on 11/19/2016.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Callback<AmanResponse> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ServerTask.Callback {
 
     public static final String TAG = LoginActivity.class.getName();
 
@@ -41,12 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected Button firstButton;
     protected Button secondButton;
 
-    protected ProgressDialog dialog;
-    protected ServerConnect connect;
-
-    protected ServerRequest.RequestType requestType;
     protected View focusView;
-
+    protected ServerTask serverTask;
     private Validation emailValidation;
     private Validation passwordValidation;
 
@@ -117,21 +112,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         validate();
 
         if (focusView == null) {
-            request();
+            serverTask.request(dialogMessage());
         } else {
             focusView.requestFocus();
         }
     }
 
-    private void request() {
-        Log.d(TAG, "request()");
-        connect = new ServerConnect();
-        addQueries();
-
-        showDialog();
-
-        sendRequest();
-    }
 
     protected void resetErrors() {
         Log.d(TAG, "resetErrors()");
@@ -143,8 +129,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "setValues()");
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
-        requestType = ServerRequest.RequestType.LOG_IN;
-        Log.d(TAG, "email= [" + email + "], password= [" + password + "], request type= [" + requestType + "]");
+        Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
+        setServerTask();
+    }
+
+    protected void setServerTask() {
+        serverTask = new ServerTask(this, ServerRequest.RequestType.LOG_IN, this) {
+            @Override
+            protected void addQueries(ServerConnect connect) {
+                Log.d(TAG, "addQueries()");
+                connect.addQuery("email", email).addQuery("password", password);
+                Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
+            }
+        };
     }
 
     protected boolean validate() {
@@ -163,25 +160,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private void showDialog() {
-        Log.d(TAG, "showDialog");
-        dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage(dialogMessage());
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
     @NonNull
-    protected CharSequence dialogMessage() {
+    protected String dialogMessage() {
         return getString(R.string.dialog_logging_in);
-    }
-
-    protected void addQueries() {
-        Log.d(TAG, "addQueries()");
-        connect.addQuery("email", email).addQuery("password", password);
-        Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
     }
 
     protected void switchActivity() {
@@ -194,41 +175,63 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(new Intent(LoginActivity.this, Authentication.class));
     }
 
-    private void sendRequest() {
-        Log.d(TAG, "sendRequest()");
-        connect.request(requestType, this);
+    @Override
+    public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
+        CurrentUser.set(email);
+        toNextActivity();
     }
 
     @Override
-    public void onResponse(Call<AmanResponse> call, Response<AmanResponse> response) {
-        if (response.isSuccessful()) {
-            AmanResponse result = response.body();
-
-            if (result.getSuccess() == 1) {
-                CurrentUser.set(email);
-                toNextActivity();
-            } else {
-                Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            Log.d(TAG, "successful response");
-            Log.d(TAG, response.body().getMessage());
-
-        } else {
-            Log.d(TAG, "unsuccessful response");
-            Log.d(TAG, "code: " + response.code());
-
-            Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-        }
-        dialog.dismiss();
+    public void onTaskFailure(Call<AmanResponse> call, Response<AmanResponse> response) {
+        Toast.makeText(AmanApplication.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onFailure(Call<AmanResponse> call, Throwable t) {
+    public void onTaskError(Call<AmanResponse> call, Response<AmanResponse> response) {
+        Log.d(TAG, "unsuccessful response");
+        Log.d(TAG, "code: " + response.code());
+        Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onException(Call<AmanResponse> call, Throwable t) {
         Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
         Log.d(TAG, "Network error");
 
         t.printStackTrace();
-        dialog.dismiss();
     }
+
+
+//    @Override
+//    public void onResponse(Call<AmanResponse> call, Response<AmanResponse> response) {
+//        if (response.isSuccessful()) {
+//            AmanResponse result = response.body();
+//
+//            if (result.getSuccess() == 1) {
+//                CurrentUser.set(email);
+//                toNextActivity();
+//            } else {
+//                Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//
+//            Log.d(TAG, "successful response");
+//            Log.d(TAG, response.body().getMessage());
+//
+//        } else {
+//            Log.d(TAG, "unsuccessful response");
+//            Log.d(TAG, "code: " + response.code());
+//
+//            Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+//        }
+//        dialog.dismiss();
+//    }
+//
+//    @Override
+//    public void onFailure(Call<AmanResponse> call, Throwable t) {
+//        Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+//        Log.d(TAG, "Network error");
+//
+//        t.printStackTrace();
+//        dialog.dismiss();
+//    }
 }

@@ -1,6 +1,5 @@
 package com.amanapp.application.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,19 +15,19 @@ import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
+import com.amanapp.server.ServerTask;
 
 import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Authentication extends AppCompatActivity implements Callback<AmanResponse> {
+public class Authentication extends AppCompatActivity {
 
     protected EditText authenticationCode;
     protected Button submit;
-    protected ProgressDialog dialog;
-    protected ServerConnect connect;
+    protected ServerTask serverTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,56 +37,12 @@ public class Authentication extends AppCompatActivity implements Callback<AmanRe
         authenticationCode = (EditText) findViewById(R.id.authentication_code);
         submit = (Button) findViewById(R.id.submit_code);
 
-        submit.setOnClickListener(new View.OnClickListener() {
+        serverTask = new ServerTask(this, ServerRequest.RequestType.GET_AUTHSECRET, new ServerTask.Callback() {
             @Override
-            public void onClick(View view) {
-                request();
-            }
-        });
-    }
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
-    //TODO: Build an abstract class to hold the repeated codes ( Important )
-    private void showDialog() {
-        dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Please wait...");
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-    }
-
-    protected void addQueries() {
-        connect.addQuery("email", CurrentUser.get());
-    }
-
-    private void sendRequest() {
-        connect.request(ServerRequest.RequestType.GET_AUTHSECRET, this);
-    }
-
-    private void request() {
-        connect = new ServerConnect();
-        addQueries();
-
-        showDialog();
-
-        sendRequest();
-    }
-
-    @Override
-    public void onResponse(Call<AmanResponse> call, Response<AmanResponse> response) {
-        if (response.isSuccessful()) {
-            AmanResponse result = response.body();
-
-            if (result.getSuccess() == 1) {
-
+            public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
                 try {
                     String submittedCode = authenticationCode.getText().toString();
-                    String secret = result.getMessage();
+                    String secret = response.body().getMessage();
                     String currentCode = new TwoFactorAuthUtil().generateCurrentNumber(secret);
 
                     if (currentCode.equals(submittedCode)) {
@@ -98,21 +53,39 @@ public class Authentication extends AppCompatActivity implements Callback<AmanRe
                 } catch (GeneralSecurityException e) {
                     e.printStackTrace();
                 }
-            } else {
-                Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
             }
 
-        } else {
+            @Override
+            public void onTaskFailure(Call<AmanResponse> call, Response<AmanResponse> response) {
+                Toast.makeText(AmanApplication.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+            }
 
-            Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-        }
-        dialog.dismiss();
+            @Override
+            public void onTaskError(Call<AmanResponse> call, Response<AmanResponse> response) {
+                Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onException(Call<AmanResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        }) {
+            @Override
+            protected void addQueries(ServerConnect connect) {
+                connect.addQuery("email", CurrentUser.get());
+            }
+        };
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serverTask.request(getString(R.string.dialog_authentication));
+            }
+        });
     }
 
     @Override
-    public void onFailure(Call<AmanResponse> call, Throwable t) {
-        Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-        t.printStackTrace();
-        dialog.dismiss();
+    public void onBackPressed() {
+
     }
 }
