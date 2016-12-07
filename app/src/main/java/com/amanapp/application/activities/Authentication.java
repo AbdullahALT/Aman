@@ -51,6 +51,7 @@ public class Authentication extends AppCompatActivity implements Callback<AmanRe
 
     }
 
+    //TODO: Build an abstract class to hold the repeated codes ( Important )
     private void showDialog() {
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
