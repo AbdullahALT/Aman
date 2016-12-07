@@ -47,9 +47,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".application.activities.QrCode" />
         <activity android:name=".application.activities.Authentication" />
-        <activity android:name=".application.activities.QrCode2" />
+        <activity android:name=".application.activities.QrCode" />
     </application>
 
 </manifest>

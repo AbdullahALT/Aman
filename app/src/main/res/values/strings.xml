@@ -33,5 +33,6 @@
         - Each time you login to your account, you will be asked to enter six digits code to verify that you are the owner of this account. \n\n
         - To get these six digits, scan the QR code using any authenticator application that support TOTP protocol. Google Authenticator is one of these application and we recommend using it.\n\n
         - If you have Google Authenticator installed on this device, then click Send to send your private key directly to the Google Authenticator application then return to this application and click Proceed to proceed to your account.
+
     </string>
 </resources>

@@ -1,69 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amanapp.application.activities.UploadActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/app_bar" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/global_padding">
 
-        <include layout="@layout/app_bar" />
+        <include layout="@layout/card_upload_file" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/global_padding">
+    </FrameLayout>
 
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/upload_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
-                    android:hint="Name your file"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp" />
-
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/upload_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/button_margin_small"
-                android:layout_weight="1"
-                android:text="Upload" />
-
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/button_margin_small"
-                android:layout_weight="1"
-                android:text="Cancel" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

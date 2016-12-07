@@ -31,7 +31,7 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload2);
+        setContentView(R.layout.activity_upload);
         Log.v(TAG, "onCreate Started");
         path = getIntent().getStringExtra(EXTRA_PATH);
         Log.v(TAG, "path is: " + path);

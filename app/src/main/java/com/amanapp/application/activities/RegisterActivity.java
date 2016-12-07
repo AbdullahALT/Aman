@@ -98,9 +98,9 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     @Override
     protected void toNextActivity() {
         finish();
-        Intent intent = new Intent(RegisterActivity.this, QrCode2.class);
-        intent.putExtra(QrCode2.EXTRA_EMAIL, email);
-        intent.putExtra(QrCode2.EXTRA_SECRET, authsecret);
+        Intent intent = new Intent(RegisterActivity.this, QrCode.class);
+        intent.putExtra(QrCode.EXTRA_EMAIL, email);
+        intent.putExtra(QrCode.EXTRA_SECRET, authsecret);
         startActivity(intent);
     }
 
