@@ -20,11 +20,11 @@
         <include layout="@layout/card_server_form" />
 
         <Button
-            android:id="@+id/first_button"
-            style="?android:textAppearanceSmall"
+            android:id="@+id/second_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textStyle="bold" />
+            android:text="switch button" />
     </LinearLayout>
 </LinearLayout>
