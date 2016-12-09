@@ -2,6 +2,7 @@ package com.amanapp.dropbox;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.amanapp.utilities.UriHelpers;
 import com.dropbox.core.DbxException;
@@ -19,6 +20,7 @@ import java.io.InputStream;
  */
 public class UploadFileTask extends Task<String, Integer, FileMetadata> {
 
+    public static String TAG = UploadFileTask.class.getName();
     private final Context context;
 
 
@@ -37,12 +39,21 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
             String name = localFile.getName();
             String parts[] = name.split("\\.");
             String extension = parts[1];
-            try (InputStream inputStream = new FileInputStream(localFile)) {
-                return dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension)
-                        .withMode(WriteMode.OVERWRITE)
-                        .uploadAndFinish(inputStream);
-            } catch (DbxException | IOException e) {
-                exception = e;
+            Log.d(TAG, "localFile Path: " + remoteFolderPath + "/" + remoteFileName + "." + extension);
+//            //Encrypt here//
+            Enigma enigma = new Enigma(localFile.getAbsolutePath());
+            Log.d(TAG, "Enigma Created");
+            File encryptedFile = enigma.encrypt();
+            Log.d(TAG, "encryptedFile is null? " + (encryptedFile == null));
+//            //Encrypt end here//
+            if (encryptedFile != null) {
+                try (InputStream inputStream = new FileInputStream(encryptedFile)) {
+                    return dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension + ".aman")
+                            .withMode(WriteMode.OVERWRITE)
+                            .uploadAndFinish(inputStream);
+                } catch (DbxException | IOException e) {
+                    exception = e;
+                }
             }
         }
         return null;

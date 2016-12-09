@@ -58,10 +58,19 @@ public class DownloadFileTask extends Task<FileSerialized, Void, File> {
                         .download(outputStream);
             }
             Log.v(TAG, "File Downloaded on " + file.getPath());
+            //Decrypt
+            Enigma enigma = new Enigma(file.getAbsolutePath());
+            enigma.decrypt();
+
             // Tell android about the file
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             intent.setData(Uri.fromFile(file));
             mContext.sendBroadcast(intent);
+
+            // Tell android about the encrypted file
+            Intent intent2 = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            intent2.setData(Uri.fromFile(file));
+            mContext.sendBroadcast(intent2);
             Log.v(TAG, "Success");
             return file;
         } catch (DbxException | IOException e) {

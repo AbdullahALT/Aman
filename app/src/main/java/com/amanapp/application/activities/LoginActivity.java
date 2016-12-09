@@ -14,12 +14,15 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
+import com.amanapp.crypto.SecretKey;
 import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
 import com.amanapp.server.validators.Validation;
+
+import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -177,8 +180,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
-        CurrentUser.set(email);
-        toNextActivity();
+
+        try {
+            CurrentUser.set(email);
+            SecretKey.init("StaticPassword", "StaticSalt");
+            toNextActivity();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
