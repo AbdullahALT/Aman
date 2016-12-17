@@ -18,11 +18,13 @@ public class SecretKey {
     private SecretKey() {
     }
 
+    /* Called after a successful registration or login*/
     public static void init(String password, String salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
         secretKeySpec = generate(password, salt);
     }
 
-    public static SecretKeySpec get() {
+    /* Only FileCrypto class calls this function*/
+    static SecretKeySpec get() {
         return secretKeySpec;
     }
 
@@ -31,8 +33,8 @@ public class SecretKey {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 1000, 128);
         javax.crypto.SecretKey tmp = factory.generateSecret(spec);
+        /* AES is the algorithm we want this key to work with*/
         return new SecretKeySpec(tmp.getEncoded(), "AES");
     }
-
 
 }

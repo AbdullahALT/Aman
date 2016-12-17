@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/global_padding"
             android:text="@string/qr_code_instructions"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
     </LinearLayout>

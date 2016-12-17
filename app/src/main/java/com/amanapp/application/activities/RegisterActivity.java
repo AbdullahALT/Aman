@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.amanapp.R;
-import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
@@ -19,7 +18,6 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
 
     protected String confirmation;
 
-    private String authsecret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,6 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     protected void setValues() {
         super.setValues();
         confirmation = confirmationView.getText().toString();
-        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
         Log.d(TAG, "confirmation= [" + confirmation + "], authentication secret= [" + authsecret + "]");
     }
 

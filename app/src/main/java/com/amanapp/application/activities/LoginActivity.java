@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
+import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.crypto.SecretKey;
 import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     protected String email;
     protected String password;
+    protected String authsecret;
+
 
     protected Button firstButton;
     protected Button secondButton;
@@ -132,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "setValues()");
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
+        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
         Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
         setServerTask();
     }
@@ -183,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             CurrentUser.set(email);
-            SecretKey.init("StaticPassword", "StaticSalt");
+            SecretKey.init(password, authsecret);
             toNextActivity();
         } catch (GeneralSecurityException e) {
             e.printStackTrace();

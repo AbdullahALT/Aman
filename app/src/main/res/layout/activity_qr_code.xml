@@ -40,7 +40,7 @@
 
                 <include layout="@layout/card_register_greetings" />
 
-                <include layout="@layout/card_qr_code2" />
+                <include layout="@layout/card_qr_code" />
 
                 <include layout="@layout/card_qr_instructions" />
 
