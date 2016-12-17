@@ -37,7 +37,6 @@ public class FileCrypto {
     }
 
     public File decrypt(File file) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
-//        cipher.init(Cipher.DECRYPT_MODE, SecretKey.get(), ivSpec);
         return Cryptography.decrypt(cipher, file, SecretKey.get());
     }
 

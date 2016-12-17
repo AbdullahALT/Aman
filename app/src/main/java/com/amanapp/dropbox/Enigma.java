@@ -38,12 +38,14 @@ class Enigma {
     File decrypt() {
         if (isEncrypted()) {
             try {
+                Log.v(DownloadFileTask.TAG, "File is encrypted");
                 FileCrypto crypto = new FileCrypto();
                 return crypto.decrypt(new File(path));
             } catch (GeneralSecurityException | IOException e) {
                 e.printStackTrace();
             }
         }
+        Log.v(DownloadFileTask.TAG, "File is not encrypted");
         return null;
     }
 

@@ -48,12 +48,16 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
 //            //Encrypt end here//
             if (encryptedFile != null) {
                 try (InputStream inputStream = new FileInputStream(encryptedFile)) {
-                    return dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension + ".aman")
+                    FileMetadata result = dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension + ".aman")
                             .withMode(WriteMode.OVERWRITE)
                             .uploadAndFinish(inputStream);
+                    boolean isDeleted = encryptedFile.delete();
+                    Log.d(TAG, "encryptedFile.delete()" + isDeleted);
+                    return result;
                 } catch (DbxException | IOException e) {
                     exception = e;
                 }
+
             }
         }
         return null;

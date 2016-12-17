@@ -1,8 +1,6 @@
 package com.amanapp.dropbox;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -22,8 +20,8 @@ import java.io.OutputStream;
  */
 public class DownloadFileTask extends Task<FileSerialized, Void, File> {
 
+    public final static String TAG = DownloadFileTask.class.getName();
     private final Context mContext;
-    private String TAG = DownloadFileTask.class.getName();
 
     public DownloadFileTask(@NonNull Context context, @NonNull DbxClientV2 dbxClient, @NonNull Callback<File> callback) {
         super(dbxClient, callback);
@@ -60,17 +58,13 @@ public class DownloadFileTask extends Task<FileSerialized, Void, File> {
             Log.v(TAG, "File Downloaded on " + file.getPath());
             //Decrypt
             Enigma enigma = new Enigma(file.getAbsolutePath());
-            enigma.decrypt();
+            if (enigma.decrypt() != null) {
+                boolean result = file.delete();
+                Log.v(TAG, "file deleted: " + String.valueOf(result));
+            } else {
+                Log.v(TAG, "enigma.decrypt() == null");
+            }
 
-            // Tell android about the file
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent.setData(Uri.fromFile(file));
-            mContext.sendBroadcast(intent);
-
-            // Tell android about the encrypted file
-            Intent intent2 = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent2.setData(Uri.fromFile(file));
-            mContext.sendBroadcast(intent2);
             Log.v(TAG, "Success");
             return file;
         } catch (DbxException | IOException e) {
