@@ -3,10 +3,8 @@ package com.amanapp.dropbox;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
-import com.amanapp.R;
 import com.dropbox.core.v2.files.FileMetadata;
 
 /**
@@ -48,12 +46,13 @@ public class UploadOperation extends Operation<FileMetadata> {
     public void onTaskComplete(FileMetadata result) {
         dialog.dismiss();
         Toast.makeText(context, "The file has been uploaded", Toast.LENGTH_LONG).show();
-        Snackbar.make(activity.findViewById(R.id.container), "Test", Snackbar.LENGTH_LONG).show();
+        activity.finish();
     }
 
     @Override
     public void onError(Exception e) {
         dialog.dismiss();
         Toast.makeText(context, "Error uploading the file", Toast.LENGTH_LONG).show();
+        activity.finish();
     }
 }

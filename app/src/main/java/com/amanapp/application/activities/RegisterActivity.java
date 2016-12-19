@@ -66,7 +66,6 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
             protected void addQueries(ServerConnect connect) {
                 Log.d(TAG, "addQueries()");
                 connect.addQuery("email", email).addQuery("password", password);
-                connect.addQuery("salt", "defaultSalt");
                 connect.addQuery("authsecret", authsecret);
                 Log.d(TAG, "email= [" + email + "], password= [" + password + "], authsecret=[ " + authsecret + "]");
             }
@@ -82,7 +81,17 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
 
     @Override
     protected boolean validate() {
-        if (super.validate()) {
+        if (!emailValidation.isValid()) {
+            emailView.setError(emailValidation.getErrorMessages().get(0));
+            focusView = emailView;
+            Log.d(TAG, "invalid email");
+            return false;
+        } else if (!passwordValidation.isValid()) {
+            passwordView.setError(passwordValidation.getErrorMessages().get(0));
+            focusView = passwordView;
+            Log.d(TAG, "invalid password");
+            return false;
+        } else {
             if (!confirmation.equals(password)) {
                 confirmationView.setError(getString(R.string.error_confirm_password));
                 focusView = confirmationView;

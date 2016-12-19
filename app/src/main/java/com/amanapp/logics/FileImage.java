@@ -37,12 +37,9 @@ public class FileImage implements Serializable {
 
     RequestCreator getThumbnail() {
         if (isImage()) {
-            return PicassoClient.getPicasso().load(FileThumbnailRequestHandler.buildPicassoUri(pathLower))
-                    .placeholder(R.drawable.ic_photo_grey_600_36dp)
-                    .error(R.drawable.ic_photo_grey_600_36dp);
+            return PicassoClient.getPicasso().load(FileThumbnailRequestHandler.buildPicassoUri(pathLower));
         } else {
-            return PicassoClient.getPicasso().load(R.drawable.ic_insert_drive_file_blue_36dp)
-                    .noFade();
+            return null;
         }
     }
 

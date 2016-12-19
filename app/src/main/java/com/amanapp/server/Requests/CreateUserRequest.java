@@ -13,11 +13,11 @@ class CreateUserRequest extends ServerRequest {
 
     @Override
     public void checkQuery(Map<String, String> query) {
-        if (query.size() != 4) {
+        if (query.size() != 3) {
             throw new InvalidNumberOfParametersException("sendRequest::CreateUserRequest accepts 3 parameters " +
                     "in the order [email, password, salt]");
         } else if (!query.containsKey("email") || !query.containsKey("password")
-                || !query.containsKey("salt") || !query.containsKey("authsecret")) {
+                || !query.containsKey("authsecret")) {
             throw new RequiredQueryException();
         }
     }
@@ -25,6 +25,6 @@ class CreateUserRequest extends ServerRequest {
     @Override
     public void initRequest(Map<String, String> query) {
         AmanRequests requests = RetrofitClient.getClient().create(AmanRequests.class);
-        call = requests.createUser(query.get("email"), query.get("password"), query.get("salt"), query.get("authsecret"));
+        call = requests.createUser(query.get("email"), query.get("password"), query.get("authsecret"));
     }
 }

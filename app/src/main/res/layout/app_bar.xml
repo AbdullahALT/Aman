@@ -6,9 +6,9 @@
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/dbx_primary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:background="@color/primary_500"
+    android:theme="@style/AmanTheme.AppBar"
+    app:popupTheme="@style/AmanTheme.AppBar.Popup">
 
 
 </android.support.v7.widget.Toolbar>

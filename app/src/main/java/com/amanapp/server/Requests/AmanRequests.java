@@ -14,15 +14,11 @@ import retrofit2.http.POST;
 interface AmanRequests {
     @FormUrlEncoded
     @POST("create_user.php")
-    Call<AmanResponse> createUser(@Field("email") String email, @Field("password") String password, @Field("salt") String salt, @Field("authsecret") String authSecret);
+    Call<AmanResponse> createUser(@Field("email") String email, @Field("password") String password, @Field("authsecret") String authSecret);
 
     @FormUrlEncoded
     @POST("log_in.php")
     Call<AmanResponse> login(@Field("email") String email, @Field("password") String password);
-
-    @FormUrlEncoded
-    @POST("get_salt.php")
-    Call<AmanResponse> getSalt(@Field("email") String email);
 
     @FormUrlEncoded
     @POST("email_availability.php")
