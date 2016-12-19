@@ -202,38 +202,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         t.printStackTrace();
     }
-
-
-//    @Override
-//    public void onResponse(Call<AmanResponse> call, Response<AmanResponse> response) {
-//        if (response.isSuccessful()) {
-//            AmanResponse result = response.body();
-//
-//            if (result.getSuccess() == 1) {
-//                CurrentUser.set(email);
-//                toNextActivity();
-//            } else {
-//                Toast.makeText(AmanApplication.getContext(), result.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//
-//            Log.d(TAG, "successful response");
-//            Log.d(TAG, response.body().getMessage());
-//
-//        } else {
-//            Log.d(TAG, "unsuccessful response");
-//            Log.d(TAG, "code: " + response.code());
-//
-//            Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-//        }
-//        dialog.dismiss();
-//    }
-//
-//    @Override
-//    public void onFailure(Call<AmanResponse> call, Throwable t) {
-//        Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
-//        Log.d(TAG, "Network error");
-//
-//        t.printStackTrace();
-//        dialog.dismiss();
-//    }
 }
