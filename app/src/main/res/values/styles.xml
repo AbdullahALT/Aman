@@ -1,23 +1,21 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/dbx_white_opaque_100</item>
-        <item name="colorPrimary">@color/dbx_primary</item>
-        <item name="colorPrimaryDark">@color/dbx_primary_dark</item>
-        <item name="colorControlNormal">@color/dbx_color_control_normal</item>
-        <item name="colorControlActivated">@color/dbx_color_control_activated</item>
-        <item name="colorControlHighlight">@color/dbx_color_control_highlight</item>
-        <item name="colorSwitchThumbNormal">@color/dbx_color_switch_thumbNormal</item>
-        <item name="colorAccent">@color/aman_color_assent</item>
 
-        //custom
-        <item name="colorButtonNormal">@color/aman_color_assent</item>
-        <item name="android:textColorPrimary">#000000</item>
+    <!-- Aman Theme -->
+    <style name="AmanTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/primary_50</item>
+        <item name="colorPrimaryDark">@color/primary_800</item>
+        <item name="colorPrimary">@color/primary_500</item>
+        <item name="colorAccent">@color/secondary_assent</item>
     </style>
 
-    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored"></style>
+    <style name="AmanTheme.AppBar" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/primary_500</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AmanTheme.AppBar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/secondary_assent</item>
+    </style>
 </resources>

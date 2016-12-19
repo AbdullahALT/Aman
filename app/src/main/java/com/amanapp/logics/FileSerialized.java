@@ -1,5 +1,7 @@
 package com.amanapp.logics;
 
+import android.support.annotation.Nullable;
+
 import com.dropbox.core.v2.files.FileMetadata;
 import com.squareup.picasso.RequestCreator;
 
@@ -75,6 +77,7 @@ public class FileSerialized implements Serializable {
         return image.getIcon();
     }
 
+    @Nullable
     public RequestCreator getThumbnail() {
         return image.getThumbnail();
     }

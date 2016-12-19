@@ -24,6 +24,7 @@ import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.Operation;
 import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.v2.files.Metadata;
+import com.squareup.picasso.RequestCreator;
 
 public class FileDetailsActivity extends AppCompatActivity {
 
@@ -45,7 +46,8 @@ public class FileDetailsActivity extends AppCompatActivity {
         file = ((FileSerialized) intent.getSerializableExtra(SERIALIZED_FILE));
 
         fileImage = (ImageView) findViewById(R.id.file_image);
-        file.getThumbnail().into(fileImage);
+        RequestCreator requestCreator = file.getThumbnail();
+        if (requestCreator != null) requestCreator.into(fileImage);
 
         TextView name = (TextView) findViewById(R.id.file_name);
         name.setText(file.getName());

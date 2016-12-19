@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     protected View focusView;
     protected ServerTask serverTask;
-    private Validation emailValidation;
-    private Validation passwordValidation;
+    protected Validation emailValidation;
+    protected Validation passwordValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,18 +152,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected boolean validate() {
-        Log.d(TAG, "validate()");
-        if (!emailValidation.isValid()) {
-            emailView.setError(emailValidation.getErrorMessages().get(0));
-            focusView = emailView;
-            Log.d(TAG, "invalid email");
-            return false;
-        } else if (!passwordValidation.isValid()) {
-            passwordView.setError(passwordValidation.getErrorMessages().get(0));
-            focusView = passwordView;
-            Log.d(TAG, "invalid password");
-            return false;
-        }
         return true;
     }
 

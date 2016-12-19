@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
  * Created by Abdullah ALT on 12/1/2016.
  */
 
-public class QrCode extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     public final static String EXTRA_SECRET = "EXTRA_SECRET";
     public final static String EXTRA_EMAIL = "EXTRA_EMAIL";
@@ -43,7 +43,7 @@ public class QrCode extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_code);
+        setContentView(R.layout.activity_welcome);
 
         Intent intent = getIntent();
         secretKey = intent.getExtras().getString(EXTRA_SECRET);
@@ -72,7 +72,7 @@ public class QrCode extends AppCompatActivity {
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(QrCode.this, ListFolderActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, ListFolderActivity.class));
             }
         });
 

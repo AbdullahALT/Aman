@@ -21,8 +21,6 @@ public abstract class ServerRequest {
                 return new LoginRequest();
             case CREATE_USER:
                 return new CreateUserRequest();
-            case GET_SALT:
-                return new getSaltRequest();
             case EMAIL_AVAILABLE:
                 return new EmailAvailableRequest();
             case GET_AUTHSECRET:
@@ -59,7 +57,7 @@ public abstract class ServerRequest {
     }
 
     public enum RequestType {
-        LOG_IN, CREATE_USER, GET_SALT, EMAIL_AVAILABLE, GET_AUTHSECRET
+        LOG_IN, CREATE_USER, EMAIL_AVAILABLE, GET_AUTHSECRET
     }
 
 }

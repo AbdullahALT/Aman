@@ -103,9 +103,7 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
 
             } else if (item instanceof FolderMetadata) {
                 Log.v(TAG, "item is folder(Name:" + item.getName() + ")");
-                picasso.load(R.drawable.ic_folder_blue_36dp)
-                        .noFade()
-                        .into(itemImage);
+                itemImage.setImageResource(R.drawable.ic_folder_aman_24dp);
             }
         }
     }

@@ -182,12 +182,9 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (hasToken()) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.main_menu, menu);
             return true;
-        }
-        return false;
     }
 
     @Override
@@ -196,12 +193,9 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         if (item.getItemId() == R.id.sign_out) {
             SharedPreferences prefs = getSharedPreferences("dropbox-sample", MODE_PRIVATE);
             prefs.edit().remove("access-token").apply();
-//            metadataAdapter = new MetadataAdapter(null, null);
-//            filesView.setAdapter(metadataAdapter);
             currentPath = null;
             selectedFile = null;
             finish();
-//            startActivity(getIntent());
             startActivity(new Intent(ListFolderActivity.this, LoginActivity.class));
         }
         return true;

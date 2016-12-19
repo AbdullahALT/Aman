@@ -13,4 +13,12 @@
 
     //One Time Use Color
     <color name="buttonBarColor">#9c9696</color>
+
+    //aman palette
+    <color name="secondary_assent">#b7410e</color>
+    <color name="primary_800">#00695c</color>
+    <color name="primary_500">#009688</color>
+    <color name="primary_50">#e0f2f1</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

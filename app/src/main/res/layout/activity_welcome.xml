@@ -12,13 +12,11 @@
 
         <Button
             android:id="@+id/proceed_button"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/buttonBarColor"
-            android:text="Proceed To Your Account"
-            android:textColor="#FFF"
-            android:textSize="@dimen/text_size_default" />
+            android:text="Proceed To Your Account" />
 
         <ScrollView
             android:id="@+id/scrollView"
