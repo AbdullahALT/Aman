@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
-import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.crypto.SecretKey;
 import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     protected String email;
     protected String password;
-    protected String authsecret;
+
 
 
     protected Button firstButton;
@@ -109,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         resetErrors();
 
         setValues();
+        setServerTask();
 
         focusView = null;
 
@@ -135,9 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "setValues()");
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
-        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
         Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
-        setServerTask();
     }
 
     protected void setServerTask() {
@@ -152,6 +150,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected boolean validate() {
+        if (!emailValidation.isValid()) {
+            emailView.setError(emailValidation.getErrorMessages().get(0));
+            focusView = emailView;
+            Log.d(TAG, "invalid email");
+            return false;
+        }
         return true;
     }
 
@@ -173,14 +177,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
 
-        try {
-            CurrentUser.set(email);
-            SecretKey.init(password, authsecret);
-            toNextActivity();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        }
 
+        CurrentUser.set(email);
+
+        ServerTask authTask = new ServerTask(this, ServerRequest.RequestType.GET_AUTHSECRET, new ServerTask.Callback() {
+            @Override
+            public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
+                try {
+                    SecretKey.init(password, response.body().getMessage());
+                    Log.d("Authsecret", "the authsecret is: " + response.body().getMessage());
+                    toNextActivity();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onTaskFailure(Call<AmanResponse> call, Response<AmanResponse> response) {
+                Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onTaskError(Call<AmanResponse> call, Response<AmanResponse> response) {
+                Toast.makeText(LoginActivity.this, R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onException(Call<AmanResponse> call, Throwable t) {
+                Toast.makeText(AmanApplication.getContext(), R.string.error_connect_to__server, Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        }) {
+            @Override
+            protected void addQueries(ServerConnect connect) {
+                connect.addQuery("email", email);
+            }
+        };
+
+        authTask.request(dialogMessage());
     }
 
     @Override

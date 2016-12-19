@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.amanapp.R;
+import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
@@ -17,6 +18,8 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     protected EditText confirmationView;
 
     protected String confirmation;
+
+    protected String authsecret;
 
 
     @Override
@@ -56,6 +59,7 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     protected void setValues() {
         super.setValues();
         confirmation = confirmationView.getText().toString();
+        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
         Log.d(TAG, "confirmation= [" + confirmation + "], authentication secret= [" + authsecret + "]");
     }
 
@@ -81,21 +85,18 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
 
     @Override
     protected boolean validate() {
-        if (!emailValidation.isValid()) {
-            emailView.setError(emailValidation.getErrorMessages().get(0));
-            focusView = emailView;
-            Log.d(TAG, "invalid email");
-            return false;
-        } else if (!passwordValidation.isValid()) {
-            passwordView.setError(passwordValidation.getErrorMessages().get(0));
-            focusView = passwordView;
-            Log.d(TAG, "invalid password");
-            return false;
-        } else {
-            if (!confirmation.equals(password)) {
-                confirmationView.setError(getString(R.string.error_confirm_password));
-                focusView = confirmationView;
+        if (super.validate()) {
+            if (!passwordValidation.isValid()) {
+                passwordView.setError(passwordValidation.getErrorMessages().get(0));
+                focusView = passwordView;
+                Log.d(TAG, "invalid password");
                 return false;
+            } else {
+                if (!confirmation.equals(password)) {
+                    confirmationView.setError(getString(R.string.error_confirm_password));
+                    focusView = confirmationView;
+                    return false;
+                }
             }
         }
         return true;
