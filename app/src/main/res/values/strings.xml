@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Aman App</string>
-    <!-- This is taken from dropbox so they identify our application -->
     <string name="app_key">ixpfhawscfbmdyn</string>
+
+    <!-- Main Menu -->
+    <string name="sign_out">Sign out</string>
+    <string name="feedback">Feedback</string>
+
+    <!-- This is taken from dropbox so they identify our application -->
+
     <string name="title_activity_files">Files</string>
     <string name="image_description">ImageDescription</string>
     <string name="text_description">text description</string>
-    <string name="sign_out">sign out</string>
+
     <string name="no_dropbox_account_added">No Dropbox Account Added</string>
     <string name="title_activity_file_details">File Details</string>
     <string name="action_settings">Settings</string>

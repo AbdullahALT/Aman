@@ -1,11 +1,13 @@
 package com.amanapp.application.activities;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionManager;
@@ -108,11 +110,26 @@ public class WelcomeActivity extends AppCompatActivity {
             Intent authIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("otpauth://totp/Aman%20App:" + CurrentUser.get() + "?secret=" + secretKey + "&issuer=Aman%20App"));
             startActivity(authIntent);
         } else {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-            } catch (ActivityNotFoundException e) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https:/play.google.com/store/apps//details?id=" + packageName)));
-            }
+            openStorePage(packageName);
         }
+    }
+
+    private void openStorePage(final String packageName) {
+        new AlertDialog.Builder(this)
+                .setTitle("Google Authenticator is not installed")
+                .setMessage("You will be redirected to Play Store, capture the QR code before leaving in case this application closed ")
+                .setPositiveButton("Redirect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https:/play.google.com/store/apps//details?id=" + packageName)));
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }

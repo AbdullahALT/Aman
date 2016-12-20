@@ -182,9 +182,9 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.main_menu, menu);
-            return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     @Override
@@ -197,6 +197,15 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
             selectedFile = null;
             finish();
             startActivity(new Intent(ListFolderActivity.this, LoginActivity.class));
+        } else {
+            /* Create the Intent */
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            /* Fill it with Data */
+            emailIntent.setType("plain/text");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"aman@abdullahalt.me"});
+
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
         return true;
     }
