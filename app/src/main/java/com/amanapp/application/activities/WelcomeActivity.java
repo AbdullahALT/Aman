@@ -74,7 +74,19 @@ public class WelcomeActivity extends AppCompatActivity {
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(WelcomeActivity.this, ListFolderActivity.class));
+                new AlertDialog.Builder(WelcomeActivity.this)
+                        .setTitle("Initialize authenticator before proceeding")
+                        .setMessage("Do not proceed unless you've initialized  your authenticator application, we're not responsible for losing " +
+                                "your authentication secret and there is no way to retrieve it if lost")
+                        .setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(WelcomeActivity.this, ListFolderActivity.class));
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create()
+                        .show();
             }
         });
 

@@ -41,4 +41,10 @@
         - If you have Google Authenticator installed on this device, then click Send to send your private key directly to the Google Authenticator application then return to this application and click Proceed to proceed to your account.
 
     </string>
+    <string name="upload_file_note">Any file you upload using Aman will be encrypted. In order to open the file again you\'ll have to use Aman again.</string>
+
+    <string-array name="add_dialog_options">
+        <item>Upload File</item>
+        <item>Create Folder</item>
+    </string-array>
 </resources>

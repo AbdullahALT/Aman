@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.GeneralSecurityException;
 
 
 /**
@@ -67,7 +68,7 @@ public class DownloadFileTask extends Task<FileSerialized, Void, File> {
 
             Log.v(TAG, "Success");
             return file;
-        } catch (DbxException | IOException e) {
+        } catch (DbxException | GeneralSecurityException | IOException e) {
             exception = e;
         }
         Log.v(TAG, "An error has accord" + exception.getMessage());

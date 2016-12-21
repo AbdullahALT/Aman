@@ -60,5 +60,6 @@ public class DownloadOperation extends Operation<File> {
         dialog.dismiss();
         Toast.makeText(context, "Error downloading the file", Toast.LENGTH_LONG).show();
         Log.v(TAG, "Failed Downloading the file");
+
     }
 }

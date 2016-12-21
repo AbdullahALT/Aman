@@ -2,18 +2,22 @@ package com.amanapp.application.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import com.amanapp.application.elements.DividerItemDecoration;
 import com.amanapp.application.elements.MetadataAdapter;
 import com.amanapp.cnnections.PicassoClient;
 import com.amanapp.dropbox.Callback;
+import com.amanapp.dropbox.CreateFolderTask;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.ListFolderTask;
 import com.amanapp.logics.FileSerialized;
@@ -56,8 +61,6 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_folder);
         Log.v(TAG, "Entered onCreate");
-
-        //TODO: Problem - After signing out, and then signing in again, this activity lists its last path not the home; should currentPath be static?
 
         String path = getIntent().getStringExtra(EXTRA_PATH);
         currentPath = (path == null) ? "" : path;
@@ -220,9 +223,78 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     //The onClick listener for the add button
     @Override
     public void onClick(View view) {
+//        Log.v(TAG, "add button has been clicked");
+//        Intent intent = new Intent(this, UploadActivity.class);
+//        intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
+//        startActivity(intent);
+        new AlertDialog.Builder(this)
+                .setItems(R.array.add_dialog_options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i == 0) {
+                            uploadFile();
+                        } else if (i == 1) {
+                            createFolder();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+
+    }
+
+    private void uploadFile() {
         Log.v(TAG, "add button has been clicked");
         Intent intent = new Intent(this, UploadActivity.class);
         intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
         startActivity(intent);
+    }
+
+    private void createFolder() {
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View dialogContent = inflater.inflate(R.layout.dialog_create_folder, null);
+        final EditText folderName = (EditText) dialogContent.findViewById(R.id.folder_name);
+        new AlertDialog.Builder(this)
+                .setView(dialogContent)
+                .setTitle("Folder Name")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new CreateFolderTask(DropboxClient.getClient(), new Callback<Metadata>() {
+                            @Override
+                            public void onTaskComplete(Metadata result) {
+                                ListFolderActivity.this.finish();
+                                startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
+                                Toast.makeText(ListFolderActivity.this, folderName.getText().toString() + " created", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Toast.makeText(AmanApplication.getContext(), "Error creating folder", Toast.LENGTH_LONG).show();
+                            }
+                        }).execute(currentPath, folderName.getText().toString());
+
+                    }
+                })
+                .create()
+                .show();
+
+
+//        new CreateFolderTask(DropboxClient.getClient(), new Callback<Metadata>() {
+//            @Override
+//            public void onTaskComplete(Metadata result) {
+//                ListFolderActivity.this.finish();
+//                startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
+//            }
+//
+//            @Override
+//            public void onError(Exception e) {
+//                Toast.makeText(AmanApplication.getContext(), "Error creating folder", Toast.LENGTH_LONG).show();
+//            }
+//        }).execute(currentPath, "Test2");
     }
 }

@@ -17,7 +17,7 @@
             android:id="@+id/filesView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="8dp" />
+            android:padding="@dimen/global_padding_small" />
 
 
     </LinearLayout>

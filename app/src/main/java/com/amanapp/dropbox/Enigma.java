@@ -21,29 +21,21 @@ class Enigma {
         this.path = path;
     }
 
-    File encrypt() {
+    File encrypt() throws GeneralSecurityException, IOException {
         if (!isEncrypted()) {
-            try {
                 Log.d(UploadFileTask.TAG, "File not encrypted");
                 FileCrypto crypto = new FileCrypto();
                 return crypto.encrypt(new File(path));
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-            }
         }
         Log.d(UploadFileTask.TAG, "File is already encrypted");
         return null;
     }
 
-    File decrypt() {
+    File decrypt() throws GeneralSecurityException, IOException {
         if (isEncrypted()) {
-            try {
                 Log.v(DownloadFileTask.TAG, "File is encrypted");
                 FileCrypto crypto = new FileCrypto();
                 return crypto.decrypt(new File(path));
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-            }
         }
         Log.v(DownloadFileTask.TAG, "File is not encrypted");
         return null;

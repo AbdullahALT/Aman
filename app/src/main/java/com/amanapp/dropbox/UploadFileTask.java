@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 
 /**
  * Async task to upload a file to a directory
@@ -41,10 +42,16 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
             String extension = parts[1];
             Log.d(TAG, "localFile Path: " + remoteFolderPath + "/" + remoteFileName + "." + extension);
 //            //Encrypt here//
-            Enigma enigma = new Enigma(localFile.getAbsolutePath());
-            Log.d(TAG, "Enigma Created");
-            File encryptedFile = enigma.encrypt();
-            Log.d(TAG, "encryptedFile is null? " + (encryptedFile == null));
+            File encryptedFile;
+            try {
+                Enigma enigma = new Enigma(localFile.getAbsolutePath());
+                Log.d(TAG, "Enigma Created");
+                encryptedFile = enigma.encrypt();
+                Log.d(TAG, "encryptedFile is null? " + (encryptedFile == null));
+            } catch (GeneralSecurityException | IOException e) {
+                exception = e;
+                return null;
+            }
 //            //Encrypt end here//
             if (encryptedFile != null) {
                 try (InputStream inputStream = new FileInputStream(encryptedFile)) {
@@ -56,6 +63,7 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
                     return result;
                 } catch (DbxException | IOException e) {
                     exception = e;
+                    return null;
                 }
 
             }

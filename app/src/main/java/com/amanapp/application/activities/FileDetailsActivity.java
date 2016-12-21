@@ -72,6 +72,12 @@ public class FileDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         FloatingActionButton downloadButton = (FloatingActionButton) findViewById(R.id.fab);
         downloadButton.setOnClickListener(new View.OnClickListener() {

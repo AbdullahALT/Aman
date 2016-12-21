@@ -28,7 +28,6 @@ public class Authentication extends AppCompatActivity {
     protected Button submit;
     protected ServerTask serverTask;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
