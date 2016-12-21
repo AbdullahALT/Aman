@@ -84,7 +84,7 @@ public class FileDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(final View view) {
                 download = new DownloadOperation(FileDetailsActivity.this, FileDetailsActivity.this, file);
-                download.performWithPermissions(Operation.FileAction.DOWNLOAD, "Downloading");
+                download.performWithPermissions(Operation.FileAction.DOWNLOAD, getString(R.string.downloading));
             }
         });
 
@@ -93,8 +93,9 @@ public class FileDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(final View view) {
                 new AlertDialog.Builder(FileDetailsActivity.this)
-                        .setMessage("Do you want to delete " + file.getPathDisplay())
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(file.getName() + "." + file.getExtension())
+                        .setMessage(R.string.delete_alert_message)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Log.v(TAG, "Start Deleting");
@@ -104,7 +105,7 @@ public class FileDetailsActivity extends AppCompatActivity {
                                                     public void onTaskComplete(Metadata result) {
                                                         Log.v(TAG, "The file " + result.getName() + " has been deleted");
                                                         Toast.makeText(AmanApplication.getContext(),
-                                                                "The file has been deleted",
+                                                                R.string.toast_delete_success,
                                                                 Toast.LENGTH_LONG).show();
                                                         finish();
 
@@ -114,7 +115,7 @@ public class FileDetailsActivity extends AppCompatActivity {
                                                     public void onError(Exception e) {
                                                         Log.v(TAG, "Error deleting the file: " + e.getMessage());
                                                         Toast.makeText(AmanApplication.getContext(),
-                                                                "An error has occurred",
+                                                                R.string.error_occurred,
                                                                 Toast.LENGTH_LONG).show();
                                                     }
                                                 }
@@ -133,7 +134,7 @@ public class FileDetailsActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        download.onRequestPermissionsResult(permissions, grantResults, "Downloading");
+        download.onRequestPermissionsResult(permissions, grantResults, getResources().getString(R.string.downloading));
     }
 
 }

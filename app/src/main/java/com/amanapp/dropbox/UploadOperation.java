@@ -53,6 +53,7 @@ public class UploadOperation extends Operation<FileMetadata> {
     public void onError(Exception e) {
         dialog.dismiss();
         Toast.makeText(context, "Error uploading the file", Toast.LENGTH_LONG).show();
+        e.printStackTrace();
         activity.finish();
     }
 }

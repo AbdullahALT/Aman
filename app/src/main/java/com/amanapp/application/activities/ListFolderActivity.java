@@ -259,7 +259,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         final EditText folderName = (EditText) dialogContent.findViewById(R.id.folder_name);
         new AlertDialog.Builder(this)
                 .setView(dialogContent)
-                .setTitle("Folder Name")
+                .setTitle("Create")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
