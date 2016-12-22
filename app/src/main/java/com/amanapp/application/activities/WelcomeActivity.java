@@ -100,9 +100,10 @@ public class WelcomeActivity extends AppCompatActivity {
         instructionCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (instructionDetails.getVisibility() == View.GONE) {
+
                     TransitionManager.beginDelayedTransition(instructionCard);
+
                     instructionDetails.setVisibility(View.VISIBLE);
                     instructionCardImage.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
                 } else {
@@ -112,6 +113,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void sendToAuthenticator() {

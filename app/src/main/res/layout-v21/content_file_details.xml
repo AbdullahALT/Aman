@@ -48,6 +48,17 @@
                                 android:textSize="@dimen/text_size_default" />
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/change_name_icon"
+                            android:layout_width="@dimen/icon_size_small"
+                            android:layout_height="@dimen/icon_size_small"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="8dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:contentDescription="Rename File"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_edit_black_24px" />
+
                         <TextView
                             android:id="@+id/file_name"
                             android:layout_width="wrap_content"

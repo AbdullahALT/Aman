@@ -66,6 +66,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         //Override the onBackPressed and make it nothing to prevent user from going back
+        Intent backHome = new Intent(Intent.ACTION_MAIN);
+        backHome.addCategory(Intent.CATEGORY_HOME);
+        backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(backHome);
     }
 
     protected void setActionBarTitle() {

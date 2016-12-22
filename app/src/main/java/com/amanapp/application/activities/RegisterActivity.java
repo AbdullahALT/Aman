@@ -28,6 +28,11 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     }
 
     @Override
+    public void onBackPressed() {
+        switchActivity();
+    }
+
+    @Override
     protected void setActionBarTitle() {
         //noinspection ConstantConditions
         getSupportActionBar().setTitle("Register");

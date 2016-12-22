@@ -85,6 +85,6 @@ public class Authentication extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        startActivity(new Intent(Authentication.this, LoginActivity.class));
     }
 }

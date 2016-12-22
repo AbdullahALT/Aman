@@ -43,6 +43,13 @@ class FilePath implements Serializable {
         return fullName;
     }
 
+    String getParentPath() {
+        String parent = "";
+        for (int i = 0; i < (pathParts.length - 1); i++) {
+            parent += pathParts[i] + "/";
+        }
+        return parent;
+    }
     private boolean isHomeFolder(int folderIndex) {
         return folderIndex < 2;
     }

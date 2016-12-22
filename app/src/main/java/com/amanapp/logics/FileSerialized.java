@@ -72,6 +72,10 @@ public class FileSerialized implements Serializable {
         return rev;
     }
 
+    public String getParentPath() {
+        return path.getParentPath();
+    }
+
     //TODO: Move this function to a better class
     public int getIcon() {
         return image.getIcon();

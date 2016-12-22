@@ -11,11 +11,11 @@
         android:paddingTop="@dimen/global_padding_small">
 
         <EditText
-            android:id="@+id/folder_name"
+            android:id="@+id/content_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/global_padding"
-            android:hint="Folder Name" />
+            android:hint="Name" />
 
     </android.support.design.widget.TextInputLayout>
 

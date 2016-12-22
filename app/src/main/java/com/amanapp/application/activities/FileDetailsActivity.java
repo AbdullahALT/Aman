@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
+import com.amanapp.application.elements.NameAlert;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DownloadOperation;
 import com.amanapp.dropbox.DropboxClient;
+import com.amanapp.dropbox.MoveTask;
 import com.amanapp.dropbox.Operation;
 import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.v2.files.Metadata;
@@ -49,8 +51,37 @@ public class FileDetailsActivity extends AppCompatActivity {
         RequestCreator requestCreator = file.getThumbnail();
         if (requestCreator != null) requestCreator.into(fileImage);
 
-        TextView name = (TextView) findViewById(R.id.file_name);
-        name.setText(file.getName());
+        final TextView fileName = (TextView) findViewById(R.id.file_name);
+        fileName.setText(file.getName());
+
+        ImageView changeName = (ImageView) findViewById(R.id.change_name_icon);
+        changeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NameAlert nameAlert = new NameAlert(FileDetailsActivity.this, "Change", "Change", new NameAlert.onPositive() {
+                    @Override
+                    public void click(final String name) {
+                        if (name.length() > 0) {
+                            new MoveTask(DropboxClient.getClient(), new Callback<Metadata>() {
+                                @Override
+                                public void onTaskComplete(Metadata result) {
+                                    fileName.setText(name);
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Toast.makeText(AmanApplication.getContext(), R.string.error_occurred, Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+                                }
+                            }).execute(file.getPathLower(), file.getParentPath().toLowerCase() + name + "." + file.getExtension());
+                        } else {
+                            Toast.makeText(AmanApplication.getContext(), "No name found", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                nameAlert.show();
+            }
+        });
 
         TextView type = (TextView) findViewById(R.id.file_type);
         type.setText(file.getExtension());

@@ -12,12 +12,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +23,7 @@ import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
 import com.amanapp.application.elements.DividerItemDecoration;
 import com.amanapp.application.elements.MetadataAdapter;
+import com.amanapp.application.elements.NameAlert;
 import com.amanapp.cnnections.PicassoClient;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.CreateFolderTask;
@@ -42,7 +41,6 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     public final static String EXTRA_PATH = "DESIRED_PATH";
     private final static String TAG = ListFolderActivity.class.getName();
     private String currentPath;
-    private Metadata selectedFile;
     private MetadataAdapter metadataAdapter;
 
     private RecyclerView filesView;
@@ -82,7 +80,6 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         filesView.addItemDecoration(decoration);
 
 
-        selectedFile = null;
         Log.v(TAG, "OnCreate finished");
     }
 
@@ -187,8 +184,15 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        if (hasToken()) {
+            menu.findItem(R.id.delete_dropbox).setVisible(true);
+        } else {
+            menu.findItem(R.id.delete_dropbox).setVisible(false);
+        }
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -197,10 +201,9 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
             SharedPreferences prefs = getSharedPreferences("dropbox-sample", MODE_PRIVATE);
             prefs.edit().remove("access-token").apply();
             currentPath = null;
-            selectedFile = null;
             finish();
             startActivity(new Intent(ListFolderActivity.this, LoginActivity.class));
-        } else {
+        } else if (item.getItemId() == R.id.feedback) {
             /* Create the Intent */
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
@@ -209,6 +212,20 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
             emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"aman@abdullahalt.me"});
 
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        } else if (item.getItemId() == R.id.delete_dropbox) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete Dropbox")
+                    .setMessage("Your Aman account will lose control to your Dropbox, but don't worry your encrypted files cna still be decrypted if you add this Dropbox again.")
+                    .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveAccessToken(null);
+                            startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, ""));
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .create()
+                    .show();
         }
         return true;
     }
@@ -217,16 +234,17 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     public void onBackPressed() {
         if (!currentPath.equals("")) {
             super.onBackPressed();
+        } else {
+            Intent backHome = new Intent(Intent.ACTION_MAIN);
+            backHome.addCategory(Intent.CATEGORY_HOME);
+            backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(backHome);
         }
     }
 
     //The onClick listener for the add button
     @Override
     public void onClick(View view) {
-//        Log.v(TAG, "add button has been clicked");
-//        Intent intent = new Intent(this, UploadActivity.class);
-//        intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
-//        startActivity(intent);
         new AlertDialog.Builder(this)
                 .setItems(R.array.add_dialog_options, new DialogInterface.OnClickListener() {
                     @Override
@@ -253,48 +271,25 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
     private void createFolder() {
 
-        LayoutInflater inflater = getLayoutInflater();
-
-        View dialogContent = inflater.inflate(R.layout.dialog_create_folder, null);
-        final EditText folderName = (EditText) dialogContent.findViewById(R.id.folder_name);
-        new AlertDialog.Builder(this)
-                .setView(dialogContent)
-                .setTitle("Create")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+        NameAlert nameAlert = new NameAlert(this, "Create Folder", "Create", new NameAlert.onPositive() {
+            @Override
+            public void click(String name) {
+                new CreateFolderTask(DropboxClient.getClient(), new Callback<Metadata>() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        new CreateFolderTask(DropboxClient.getClient(), new Callback<Metadata>() {
-                            @Override
-                            public void onTaskComplete(Metadata result) {
-                                ListFolderActivity.this.finish();
-                                startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
-                                Toast.makeText(ListFolderActivity.this, folderName.getText().toString() + " created", Toast.LENGTH_LONG).show();
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-                                Toast.makeText(AmanApplication.getContext(), "Error creating folder", Toast.LENGTH_LONG).show();
-                            }
-                        }).execute(currentPath, folderName.getText().toString());
-
+                    public void onTaskComplete(Metadata result) {
+                        ListFolderActivity.this.finish();
+                        startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
+                        Toast.makeText(ListFolderActivity.this, "Folder has been created", Toast.LENGTH_LONG).show();
                     }
-                })
-                .create()
-                .show();
 
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(AmanApplication.getContext(), "Error creating folder", Toast.LENGTH_LONG).show();
+                    }
+                }).execute(currentPath, name);
+            }
+        });
 
-//        new CreateFolderTask(DropboxClient.getClient(), new Callback<Metadata>() {
-//            @Override
-//            public void onTaskComplete(Metadata result) {
-//                ListFolderActivity.this.finish();
-//                startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//                Toast.makeText(AmanApplication.getContext(), "Error creating folder", Toast.LENGTH_LONG).show();
-//            }
-//        }).execute(currentPath, "Test2");
+        nameAlert.show();
     }
 }
