@@ -36,7 +36,9 @@
             android:label="@string/title_activity_file_details"
             android:screenOrientation="portrait"
             android:theme="@style/AmanTheme" />
-        <activity android:name=".application.activities.UploadActivity" />
+        <activity
+            android:name=".application.activities.UploadActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".application.activities.RegisterActivity"
             android:screenOrientation="portrait"
