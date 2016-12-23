@@ -91,7 +91,7 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     @Override
     protected boolean validate() {
         if (super.validate()) {
-            if (!passwordValidation.isValid()) {
+            if (!passwordValidation.validate(password)) {
                 passwordView.setError(passwordValidation.getErrorMessages().get(0));
                 focusView = passwordView;
                 Log.d(TAG, "invalid password");

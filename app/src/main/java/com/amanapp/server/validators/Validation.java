@@ -10,7 +10,6 @@ import java.util.List;
  */
 public abstract class Validation {
 
-    protected String message;
     protected boolean isValid;
     protected List<String> errorMessages;
     protected Validator[] validators;
@@ -18,31 +17,28 @@ public abstract class Validation {
     /**
      * this class start validating immediately after calling, so be sure to only initialize when you want to start validating
      *
-     * @param message: the message to be validate
      */
-    public Validation(String message) {
-        this.message = message.trim();
+    public Validation() {
         this.errorMessages = new LinkedList<>();
         setValidators();
-        validate();
     }
 
-    public static Validation Factory(String message, ValidationType type) {
+    public static Validation Factory(ValidationType type) {
         switch (type) {
             case EMAIL:
-                return new EmailValidation(message);
+                return new EmailValidation();
             case PASSWORD:
-                return new PasswordValidation(message);
+                return new PasswordValidation();
             default:
                 throw new ForcedConstantParameterException("Validation's Factory accepts only its public static constants or their " +
                         "corresponding values");
         }
     }
 
-    protected boolean validate() {
+    public boolean validate(String message) {
         isValid = true;
         for (Validator validator : validators) {
-            if (!validator.validate(message)) {
+            if (!validator.validate(message.trim())) {
                 errorMessages.add(validator.getErrorMessage());
                 isValid = false;
             }

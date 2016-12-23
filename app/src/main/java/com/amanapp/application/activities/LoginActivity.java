@@ -116,8 +116,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         focusView = null;
 
-        emailValidation = Validation.Factory(email, Validation.ValidationType.EMAIL);
-        passwordValidation = Validation.Factory(password, Validation.ValidationType.PASSWORD);
+        emailValidation = Validation.Factory(Validation.ValidationType.EMAIL);
+        passwordValidation = Validation.Factory(Validation.ValidationType.PASSWORD);
 
         validate();
 
@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected boolean validate() {
-        if (!emailValidation.isValid()) {
+        if (!emailValidation.validate(email)) {
             emailView.setError(emailValidation.getErrorMessages().get(0));
             focusView = emailView;
             Log.d(TAG, "invalid email");

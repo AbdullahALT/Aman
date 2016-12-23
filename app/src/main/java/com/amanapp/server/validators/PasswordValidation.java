@@ -5,8 +5,8 @@ package com.amanapp.server.validators;
  */
 class PasswordValidation extends Validation {
 
-    public PasswordValidation(String message) {
-        super(message);
+    public PasswordValidation() {
+        super();
     }
 
     @Override

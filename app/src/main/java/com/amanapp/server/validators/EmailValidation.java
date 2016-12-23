@@ -5,8 +5,8 @@ package com.amanapp.server.validators;
  */
 class EmailValidation extends Validation {
 
-    public EmailValidation(String message) {
-        super(message);
+    public EmailValidation() {
+        super();
     }
 
     @Override
