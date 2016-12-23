@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by Abdullah ALT on 8/27/2016.
  */
-class FilePath implements Serializable {
+public class FilePath implements Serializable {
 
     protected String path;
     protected String fullName;

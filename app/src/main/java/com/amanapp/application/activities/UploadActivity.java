@@ -1,6 +1,7 @@
 package com.amanapp.application.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import com.amanapp.R;
 import com.amanapp.dropbox.Operation;
 import com.amanapp.dropbox.UploadOperation;
+import com.amanapp.utilities.UriHelpers;
+
+import java.io.File;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -78,7 +82,10 @@ public class UploadActivity extends AppCompatActivity {
                 // This is the result of a call to launchFilePicker
                 Log.v(TAG, "resultCode is RESULT_OK: " + data.getData().getPath());
                 uri = data.getData().toString();
-                //uploadFile(data.getData().toString());
+                File file = UriHelpers.getFileForUri(this, Uri.parse(uri));
+                if (file != null) {
+                    uploadName.setText(file.getName().split("\\.")[0]);
+                }
             } else {
                 finish();
             }
