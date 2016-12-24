@@ -12,6 +12,7 @@ import com.amanapp.authentication.TwoFactorAuthUtil;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
+import com.amanapp.server.validation.Validation;
 
 public class RegisterActivity extends LoginActivity implements ServerTask.Callback {
 
@@ -20,6 +21,8 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     protected String confirmation;
 
     protected String authsecret;
+
+    private Validation passwordValidation;
 
 
     @Override
@@ -65,6 +68,7 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
         super.setValues();
         confirmation = confirmationView.getText().toString();
         authsecret = new TwoFactorAuthUtil().generateBase32Secret();
+        passwordValidation = Validation.Factory(Validation.ValidationType.REGISTRATION_PASSWORD);
         Log.d(TAG, "confirmation= [" + confirmation + "], authentication secret= [" + authsecret + "]");
     }
 

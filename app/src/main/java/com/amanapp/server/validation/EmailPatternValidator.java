@@ -1,4 +1,4 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 /**
  * Created by Abdullah ALT on 11/13/2016.
@@ -6,7 +6,7 @@ package com.amanapp.server.validators;
 final class EmailPatternValidator implements Validator {
     @Override
     public boolean validate(String message) {
-        return message.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-][A-Za-z0-9]+\\.[A-Za-z]{2,}$");
+        return message.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     }
 
     @Override
