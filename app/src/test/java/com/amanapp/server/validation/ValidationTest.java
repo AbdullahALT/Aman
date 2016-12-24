@@ -1,4 +1,4 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class ValidationTest {
 
     private Validation emailValidation = Validation.Factory(Validation.ValidationType.EMAIL);
-    private Validation passwordValidation = Validation.Factory(Validation.ValidationType.PASSWORD);
+    private Validation passwordValidation = Validation.Factory(Validation.ValidationType.REGISTRATION_PASSWORD);
 
     @Test
     public void InvalidEmail() throws Exception {
@@ -22,6 +22,11 @@ public class ValidationTest {
     @Test
     public void ValidEmail() throws Exception {
         assertTrue(emailValidation.validate("hello@email.com"));
+    }
+
+    @Test
+    public void ValidEmail2() throws Exception {
+        assertTrue(emailValidation.validate("hello@email.com.net"));
     }
 
     @Test

@@ -125,7 +125,7 @@ public class FileDetailsActivity extends AppCompatActivity {
             public void onClick(final View view) {
                 new AlertDialog.Builder(FileDetailsActivity.this)
                         .setTitle(file.getName() + "." + file.getExtension())
-                        .setMessage(R.string.delete_alert_message)
+                        .setMessage(R.string.delete_file_alert_message)
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

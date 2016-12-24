@@ -27,10 +27,10 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
 
     private static final String TAG = MetadataAdapter.class.getName();
     private final Picasso picasso;
-    private final onMetaDataClick clickHandler;
+    private final onClick clickHandler;
     private List<Metadata> items;
 
-    public MetadataAdapter(Picasso picasso, onMetaDataClick click) {
+    public MetadataAdapter(Picasso picasso, onClick click) {
         this.picasso = picasso;
         this.clickHandler = click;
     }
@@ -63,15 +63,17 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
         return items.get(position).getName().toLowerCase().hashCode();
     }
 
-    public interface onMetaDataClick {
+    public interface onClick {
         void onFileClicked(FileMetadata file);
-
         void onFolderClicked(FolderMetadata folder);
+
+        void onFolderOptionsClicked(FolderMetadata folder);
     }
 
     public class MetadataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView itemImage;
+        private ImageView itemOptions;
         private TextView itemName;
         private Metadata item;
 
@@ -79,29 +81,36 @@ public class MetadataAdapter extends RecyclerView.Adapter<MetadataAdapter.Metada
             super(itemView);
             itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
             itemName = (TextView) itemView.findViewById(R.id.itemName);
+            itemOptions = (ImageView) itemView.findViewById(R.id.itemOptions);
             itemView.setOnClickListener(this);
+            itemOptions.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (item instanceof FileMetadata) {
-                clickHandler.onFileClicked((FileMetadata) item);
-            } else if (item instanceof FolderMetadata) {
-                clickHandler.onFolderClicked((FolderMetadata) item);
+            if (view.getId() == R.id.itemOptions) {
+                clickHandler.onFolderOptionsClicked((FolderMetadata) item);
+            } else {
+                if (item instanceof FileMetadata) {
+                    clickHandler.onFileClicked((FileMetadata) item);
+                } else if (item instanceof FolderMetadata) {
+                    clickHandler.onFolderClicked((FolderMetadata) item);
+                }
             }
         }
 
-        public void bind(Metadata item) {
+        public void bind(final Metadata item) {
             this.item = item;
             this.itemName.setText(item.getName());
 
             if (item instanceof FileMetadata) {
-
+                itemOptions.setVisibility(View.GONE);
                 picasso.load((new FileSerialized((FileMetadata) item).getIcon()))
                             .noFade()
                             .into(itemImage);
 
             } else if (item instanceof FolderMetadata) {
+                itemOptions.setVisibility(View.VISIBLE);
                 Log.v(TAG, "item is folder(Name:" + item.getName() + ")");
                 itemImage.setImageResource(R.drawable.ic_folder_aman_24dp);
             }

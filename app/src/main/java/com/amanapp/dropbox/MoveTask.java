@@ -1,5 +1,7 @@
 package com.amanapp.dropbox;
 
+import android.util.Log;
+
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.Metadata;
@@ -16,7 +18,9 @@ public class MoveTask extends Task<String, Void, Metadata> {
     protected Metadata doInBackground(String... params) {
         try {
             String fromPath = params[0];
+            Log.d("Rename", params[0]);
             String toPath = params[1];
+            Log.d("Rename", params[1]);
             return dropboxClient.files().move(fromPath, toPath);
         } catch (DbxException e) {
             exception = e;
