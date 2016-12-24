@@ -1,4 +1,4 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 import java.util.LinkedList;
 import java.util.List;

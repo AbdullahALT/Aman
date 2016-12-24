@@ -1,4 +1,4 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 import com.amanapp.server.exceptions.ForcedConstantParameterException;
 
@@ -27,8 +27,10 @@ public abstract class Validation {
         switch (type) {
             case EMAIL:
                 return new EmailValidation();
-            case PASSWORD:
-                return new PasswordValidation();
+            case REGISTRATION_PASSWORD:
+                return new RegisterPasswordValidation();
+            case LOGIN_PASSWORD:
+                return new LoginPasswordValidation();
             default:
                 throw new ForcedConstantParameterException("Validation's Factory accepts only its public static constants or their " +
                         "corresponding values");
@@ -56,5 +58,5 @@ public abstract class Validation {
         return errorMessages;
     }
 
-    public enum ValidationType {EMAIL, PASSWORD}
+    public enum ValidationType {EMAIL, REGISTRATION_PASSWORD, LOGIN_PASSWORD}
 }

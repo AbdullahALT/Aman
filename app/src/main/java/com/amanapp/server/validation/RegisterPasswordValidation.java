@@ -1,18 +1,18 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 /**
  * Created by Abdullah ALT on 11/13/2016.
  */
-class PasswordValidation extends Validation {
+class RegisterPasswordValidation extends Validation {
 
-    public PasswordValidation() {
+    public RegisterPasswordValidation() {
         super();
     }
 
     @Override
     protected void setValidators() {
         validators = new Validator[]{
-                new EmptyStringValidator(), new LengthValidator(8), new CapitalLetterValidator(), new SmallLetterValidator(),
+                new CapitalLetterValidator(), new SmallLetterValidator(),
                 new NumberValidator(), new BlackListValidator()
 
         };

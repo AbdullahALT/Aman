@@ -1,4 +1,4 @@
-package com.amanapp.server.validators;
+package com.amanapp.server.validation;
 
 /**
  * Created by Abdullah ALT on 11/20/2016.
