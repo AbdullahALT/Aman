@@ -12,7 +12,7 @@ class RegisterPasswordValidation extends Validation {
     @Override
     protected void setValidators() {
         validators = new Validator[]{
-                new CapitalLetterValidator(), new SmallLetterValidator(),
+                new LengthValidator(8), new CapitalLetterValidator(), new SmallLetterValidator(),
                 new NumberValidator(), new BlackListValidator()
 
         };
