@@ -17,16 +17,18 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
-import com.amanapp.application.elements.NameAlert;
+import com.amanapp.application.activities.elements.NameAlert;
+import com.amanapp.application.core.PermissionOperation;
+import com.amanapp.application.core.logics.FileSerialized;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DownloadOperation;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.MoveTask;
-import com.amanapp.dropbox.Operation;
-import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.v2.files.Metadata;
 import com.squareup.picasso.RequestCreator;
+
+import java.io.File;
 
 public class FileDetailsActivity extends AppCompatActivity {
 
@@ -34,7 +36,7 @@ public class FileDetailsActivity extends AppCompatActivity {
     private final static String TAG = FileDetailsActivity.class.getName();
 
     private FileSerialized file;
-    private Operation download;
+    private PermissionOperation download;
 
     private ImageView fileImage;
 
@@ -114,8 +116,18 @@ public class FileDetailsActivity extends AppCompatActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                download = new DownloadOperation(FileDetailsActivity.this, FileDetailsActivity.this, file);
-                download.performWithPermissions(Operation.FileAction.DOWNLOAD, getString(R.string.downloading));
+                download = new DownloadOperation(FileDetailsActivity.this, file, getString(R.string.downloading), new Callback<File>() {
+                    @Override
+                    public void onTaskComplete(File result) {
+                        Toast.makeText(AmanApplication.getContext(), "The file has been downloaded", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(AmanApplication.getContext(), "Error downloading the file", Toast.LENGTH_LONG).show();
+                    }
+                });
+                download.performWithPermissions();
             }
         });
 
@@ -165,7 +177,7 @@ public class FileDetailsActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        download.onRequestPermissionsResult(permissions, grantResults, getResources().getString(R.string.downloading));
+        download.onRequestPermissionsResult(permissions, grantResults);
     }
 
 }

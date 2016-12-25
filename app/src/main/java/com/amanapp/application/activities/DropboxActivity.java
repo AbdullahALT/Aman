@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.application.core.PicassoClient;
+import com.amanapp.application.core.logics.CurrentUser;
 import com.amanapp.dropbox.AccessManager;
 import com.amanapp.dropbox.DropboxClient;
-import com.amanapp.logics.CurrentUser;
 
 /**
  * Created by Abdullah ALT on 11/21/2016.

@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
+import com.amanapp.application.core.logics.CurrentUser;
 import com.amanapp.crypto.SecretKey;
-import com.amanapp.logics.CurrentUser;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;

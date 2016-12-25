@@ -44,7 +44,7 @@
     <string name="downloading">Downloading…</string>
 
     <!--Upload Activity-->
-    <string name="upload_file_note">Any file you upload using Aman will be encrypted. In order to open the file again you\'ll have to use Aman again.</string>
+    <string name="upload_file_note">Any file you upload using Aman will be encrypted. In order to decrypt the files you\'ll have to use Aman to download them.</string>
 
     <!-- Authentication And Welcome Activity-->
     <string name="dialog_authentication">Confirming…</string>

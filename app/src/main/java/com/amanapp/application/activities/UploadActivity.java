@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.dropbox.Operation;
+import com.amanapp.application.core.PermissionOperation;
+import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.UploadOperation;
 import com.amanapp.utilities.UriHelpers;
+import com.dropbox.core.v2.files.FileMetadata;
 
 import java.io.File;
 
@@ -28,7 +30,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private String path;
     private String uri;
-    private Operation upload;
+    private PermissionOperation upload;
 
     private EditText uploadName;
 
@@ -94,8 +96,20 @@ public class UploadActivity extends AppCompatActivity {
 
     private void uploadFile() {
         String name = uploadName.getText().toString();
-        upload = new UploadOperation(this, this, path, name, uri);
-        upload.performWithPermissions(Operation.FileAction.UPLOAD, "Uploading");
+        upload = new UploadOperation(this, path, name, uri, "Uploading...", new Callback<FileMetadata>() {
+            @Override
+            public void onTaskComplete(FileMetadata result) {
+                Toast.makeText(UploadActivity.this, "The file has been uploaded", Toast.LENGTH_LONG).show();
+                UploadActivity.this.finish();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(UploadActivity.this, "Error uploading the file", Toast.LENGTH_LONG).show();
+                UploadActivity.this.finish();
+            }
+        });
+        upload.performWithPermissions();
     }
 
     public void launchFilePicker() {
@@ -110,6 +124,6 @@ public class UploadActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        upload.onRequestPermissionsResult(permissions, grantResults, "Uploading");
+        upload.onRequestPermissionsResult(permissions, grantResults);
     }
 }

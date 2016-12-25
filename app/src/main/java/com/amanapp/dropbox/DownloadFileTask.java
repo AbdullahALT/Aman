@@ -5,7 +5,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.amanapp.logics.FileSerialized;
+import com.amanapp.application.core.logics.FileSerialized;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 

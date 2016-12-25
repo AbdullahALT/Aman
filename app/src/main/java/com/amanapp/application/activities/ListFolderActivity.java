@@ -22,17 +22,18 @@ import android.widget.Toast;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
-import com.amanapp.application.elements.DividerItemDecoration;
-import com.amanapp.application.elements.MetadataAdapter;
-import com.amanapp.application.elements.NameAlert;
-import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.application.activities.elements.DividerItemDecoration;
+import com.amanapp.application.activities.elements.MetadataAdapter;
+import com.amanapp.application.activities.elements.NameAlert;
+import com.amanapp.application.core.PermissionsManager;
+import com.amanapp.application.core.PicassoClient;
+import com.amanapp.application.core.logics.FileSerialized;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.CreateFolderTask;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.ListFolderTask;
 import com.amanapp.dropbox.MoveTask;
-import com.amanapp.logics.FileSerialized;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
@@ -350,7 +351,42 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     }
 
     private void uploadFile() {
-        Log.v(TAG, "add button has been clicked");
+//        Log.v(TAG, "add button has been clicked");
+//        Intent intent = new Intent(this, UploadActivity.class);
+//        intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
+//        startActivity(intent);
+
+        final PermissionsManager permissionsManager = new PermissionsManager(this, PermissionsManager.Permission.UPLOAD);
+        if (permissionsManager.hasPermission()) {
+            toUploadActivity();
+        } else {
+            if (permissionsManager.shouldDisplayRationaleForAction()) {
+                new AlertDialog.Builder(this)
+                        .setMessage("This app requires storage access to download and upload files.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                permissionsManager.requestPermissionsForAction();
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create()
+                        .show();
+            } else {
+                permissionsManager.requestPermissionsForAction();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            toUploadActivity();
+        }
+    }
+
+    private void toUploadActivity() {
         Intent intent = new Intent(this, UploadActivity.class);
         intent.putExtra(UploadActivity.EXTRA_PATH, currentPath);
         startActivity(intent);

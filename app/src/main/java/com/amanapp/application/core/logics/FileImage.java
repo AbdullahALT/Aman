@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.application.core.logics;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,7 +6,7 @@ import android.webkit.MimeTypeMap;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
-import com.amanapp.cnnections.PicassoClient;
+import com.amanapp.application.core.PicassoClient;
 import com.amanapp.dropbox.FileThumbnailRequestHandler;
 import com.squareup.picasso.RequestCreator;
 

@@ -1,4 +1,4 @@
-package com.amanapp.cnnections;
+package com.amanapp.application.core;
 
 import android.content.Context;
 import android.util.Log;
@@ -28,7 +28,6 @@ public class PicassoClient {
 
         Log.v(TAG, "picasso is null: " + (sPicasso == null));
     }
-
 
     public static Picasso getPicasso() {
         return sPicasso;

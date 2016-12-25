@@ -1,4 +1,4 @@
-package com.amanapp.application.elements;
+package com.amanapp.application.activities.elements;
 
 import android.content.Context;
 import android.content.DialogInterface;
