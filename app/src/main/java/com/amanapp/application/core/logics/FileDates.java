@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.application.core.logics;
 
 import java.io.Serializable;
 import java.text.DateFormat;

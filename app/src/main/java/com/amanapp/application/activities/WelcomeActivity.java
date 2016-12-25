@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
+import com.amanapp.application.core.logics.CurrentUser;
 import com.amanapp.authentication.TwoFactorAuthUtil;
-import com.amanapp.logics.CurrentUser;
 import com.squareup.picasso.Picasso;
 
 /**

@@ -1,26 +1,27 @@
 package com.amanapp.dropbox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.amanapp.logics.FileSerialized;
+import com.amanapp.application.core.PermissionOperation;
+import com.amanapp.application.core.PermissionsManager;
+import com.amanapp.application.core.logics.FileSerialized;
 
 import java.io.File;
 
 /**
  * Created by Abdullah ALT on 8/19/2016.
  */
-public class DownloadOperation extends Operation<File> {
+public class DownloadOperation extends PermissionOperation<File> {
 
     private final String TAG = DownloadOperation.class.getName();
 
     private final FileSerialized file;
 
-    public DownloadOperation(@NonNull Context context, @NonNull Activity activity, @NonNull FileSerialized file) {
-        super(context, activity, FileAction.DOWNLOAD);
+    public DownloadOperation(@NonNull Context context, @NonNull FileSerialized file, String waitingMessage, Callback<File> callback) {
+        super(context, PermissionsManager.Permission.DOWNLOAD, waitingMessage, callback);
         this.file = file;
     }
 
@@ -35,7 +36,7 @@ public class DownloadOperation extends Operation<File> {
     }
 
     @Override
-    protected void onPermissionDenied(String permission) {
+    public void onPermissionDenied(String permission) {
         Toast.makeText(context,
                 "Can't download file: write access denied. " +
                         "Please grant storage permissions to use this functionality.",
@@ -44,22 +45,7 @@ public class DownloadOperation extends Operation<File> {
     }
 
     @Override
-    protected void onPermissionGranted(String waitingMessage) {
-        performAction(action, waitingMessage);
-    }
-
-    @Override
-    public void onTaskComplete(File result) {
-        dialog.dismiss();
-        Toast.makeText(context, "The file has been downloaded", Toast.LENGTH_LONG).show();
-        Log.v(TAG, "The file is downloaded");
-    }
-
-    @Override
-    public void onError(Exception e) {
-        dialog.dismiss();
-        Toast.makeText(context, "Error downloading the file", Toast.LENGTH_LONG).show();
-        Log.v(TAG, "Failed Downloading the file");
-
+    public void onPermissionGranted(String[] permissions) {
+        performAction();
     }
 }

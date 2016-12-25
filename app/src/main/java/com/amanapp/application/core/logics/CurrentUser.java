@@ -1,4 +1,4 @@
-package com.amanapp.logics;
+package com.amanapp.application.core.logics;
 
 /**
  * Created by Abdullah ALT on 11/20/2016.

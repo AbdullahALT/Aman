@@ -1,26 +1,29 @@
 package com.amanapp.dropbox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.amanapp.application.core.PermissionOperation;
+import com.amanapp.application.core.PermissionsManager;
 import com.dropbox.core.v2.files.FileMetadata;
 
 /**
  * Created by Abdullah ALT on 8/20/2016.
  */
-public class UploadOperation extends Operation<FileMetadata> {
+public class UploadOperation extends PermissionOperation<FileMetadata> {
 
     private final String uri;
     private final String path;
     private final String name;
+    private Callback<FileMetadata> callback;
 
-    public UploadOperation(@NonNull Context context, @NonNull Activity activity, @NonNull String path, @NonNull String name, @NonNull String uri) {
-        super(context, activity, FileAction.UPLOAD);
+    public UploadOperation(@NonNull Context context, @NonNull String path, @NonNull String name, @NonNull String uri, String waitingMessage, Callback<FileMetadata> callback) {
+        super(context, PermissionsManager.Permission.UPLOAD, waitingMessage, callback);
         this.path = path;
         this.name = name;
         this.uri = uri;
+        this.callback = callback;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class UploadOperation extends Operation<FileMetadata> {
     }
 
     @Override
-    protected void onPermissionDenied(String permission) {
+    public void onPermissionDenied(String permission) {
         Toast.makeText(context,
                 "Can't upload file: read access denied. " +
                         "Please grant storage permissions to use this functionality.",
@@ -38,22 +41,7 @@ public class UploadOperation extends Operation<FileMetadata> {
     }
 
     @Override
-    protected void onPermissionGranted(String waitingMessage) {
-        performAction(action, waitingMessage);
-    }
-
-    @Override
-    public void onTaskComplete(FileMetadata result) {
-        dialog.dismiss();
-        Toast.makeText(context, "The file has been uploaded", Toast.LENGTH_LONG).show();
-        activity.finish();
-    }
-
-    @Override
-    public void onError(Exception e) {
-        dialog.dismiss();
-        Toast.makeText(context, "Error uploading the file", Toast.LENGTH_LONG).show();
-        e.printStackTrace();
-        activity.finish();
+    public void onPermissionGranted(String[] permissions) {
+        performAction();
     }
 }

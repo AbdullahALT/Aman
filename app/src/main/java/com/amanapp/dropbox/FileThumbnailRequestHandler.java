@@ -2,7 +2,7 @@ package com.amanapp.dropbox;
 
 import android.net.Uri;
 
-import com.amanapp.logics.FileSerialized;
+import com.amanapp.application.core.logics.FileSerialized;
 import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Example Picasso request handler that gets the thumbnail url for a dropbox path
  * Only handles urls like dropbox://dropbox/[path_to_file]
- * See {@link com.amanapp.application.elements.MetadataAdapter} for usage
+ * See {@link com.amanapp.application.activities.elements.MetadataAdapter} for usage
  */
 public class FileThumbnailRequestHandler extends RequestHandler {
 

@@ -1,4 +1,4 @@
-package com.amanapp.application.elements;
+package com.amanapp.application.activities.elements;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amanapp.R;
-import com.amanapp.logics.FileSerialized;
+import com.amanapp.application.core.logics.FileSerialized;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
