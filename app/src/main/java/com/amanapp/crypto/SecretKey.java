@@ -1,5 +1,7 @@
 package com.amanapp.crypto;
 
+import android.app.Application;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -11,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Created by Abdullah ALT on 12/9/2016.
  */
-public class SecretKey {
+public class SecretKey extends Application {
 
     private static SecretKeySpec secretKeySpec = null;
 

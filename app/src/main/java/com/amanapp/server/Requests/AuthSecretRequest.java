@@ -1,8 +1,8 @@
 package com.amanapp.server.Requests;
 
+import com.amanapp.application.core.exceptions.InvalidNumberOfParametersException;
+import com.amanapp.application.core.exceptions.RequiredQueryException;
 import com.amanapp.server.RetrofitClient;
-import com.amanapp.server.exceptions.InvalidNumberOfParametersException;
-import com.amanapp.server.exceptions.RequiredQueryException;
 
 import java.util.Map;
 

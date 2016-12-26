@@ -1,6 +1,6 @@
 package com.amanapp.server.validation;
 
-import com.amanapp.server.exceptions.ForcedConstantParameterException;
+import com.amanapp.application.core.exceptions.ForcedConstantParameterException;
 
 import java.util.LinkedList;
 import java.util.List;

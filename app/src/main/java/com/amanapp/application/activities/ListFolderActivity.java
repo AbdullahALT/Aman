@@ -302,8 +302,8 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         } else if (item.getItemId() == R.id.delete_dropbox) {
             new AlertDialog.Builder(this)
-                    .setTitle("Delete Dropbox")
-                    .setMessage("Your Aman account will lose control to your Dropbox, but don't worry your encrypted files cna still be decrypted if you add this Dropbox again.")
+                    .setTitle(R.string.disconnect_dropbox)
+                    .setMessage("Your Aman account will lose control over your Dropbox, but don't worry your encrypted files cna still be decrypted if you connect this Dropbox again.")
                     .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

@@ -82,6 +82,7 @@ public abstract class PermissionOperation<Return> implements Callback<Return>, P
     @Override
     public void onError(Exception e) {
         dialog.dismiss();
+        e.printStackTrace();
         if (callback != null) {
             callback.onError(e);
         }

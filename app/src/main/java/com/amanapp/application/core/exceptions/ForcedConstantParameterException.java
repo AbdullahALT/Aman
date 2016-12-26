@@ -1,4 +1,4 @@
-package com.amanapp.server.exceptions;
+package com.amanapp.application.core.exceptions;
 
 /**
  * Created by Abdullah ALT on 11/15/2016.

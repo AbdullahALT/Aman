@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.amanapp.utilities.UriHelpers;
+import com.amanapp.application.core.UriHelpers;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
