@@ -42,6 +42,7 @@ public class Authentication extends AppCompatActivity {
                 try {
                     String submittedCode = authenticationCode.getText().toString();
                     String secret = response.body().getMessage();
+                    // TODO Decrypt autsecret
                     String currentCode = new TwoFactorAuthUtil().generateCurrentNumber(secret);
 
                     if (currentCode.equals(submittedCode)) {

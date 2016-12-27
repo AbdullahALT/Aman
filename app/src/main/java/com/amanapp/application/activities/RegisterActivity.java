@@ -75,6 +75,8 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     @Override
     protected void setServerTask() {
         serverTask = new ServerTask(RegisterActivity.this, ServerRequest.RequestType.CREATE_USER, RegisterActivity.this) {
+         //TODO Encrypt authentication
+
             @Override
             protected void addQueries(ServerConnect connect) {
                 Log.d(TAG, "addQueries()");

@@ -193,7 +193,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
                 try {
-                    SecretKey.init(password, response.body().getMessage());
+                    String authsecret = response.body().getMessage();
+                    // TODO Decrypt autsecret
+                    SecretKey.init(password, authsecret);
+
                     Log.d("Authsecret", "the authsecret is: " + response.body().getMessage());
                     toNextActivity();
                 } catch (GeneralSecurityException e) {
