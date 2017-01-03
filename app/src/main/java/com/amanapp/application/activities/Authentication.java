@@ -12,6 +12,7 @@ import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
 import com.amanapp.application.core.logics.CurrentUser;
 import com.amanapp.authentication.TwoFactorAuthUtil;
+import com.amanapp.crypto.Enc_Dec_String;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
@@ -43,7 +44,12 @@ public class Authentication extends AppCompatActivity {
                     String submittedCode = authenticationCode.getText().toString();
                     String secret = response.body().getMessage();
                     // TODO Decrypt autsecret
-                    String currentCode = new TwoFactorAuthUtil().generateCurrentNumber(secret);
+                    byte []secauteabytesWithiv= secret.getBytes();
+                    byte[] iv= Enc_Dec_String.GetIv(secauteabytesWithiv);
+                    byte[] secauth =Enc_Dec_String.GetSecauth(secauteabytesWithiv);
+                    byte[] decSecauth = Enc_Dec_String.decryptString(secauth,iv);
+                    String authsecretfinal = decSecauth.toString();
+                    String currentCode = new TwoFactorAuthUtil().generateCurrentNumber(authsecretfinal);
 
                     if (currentCode.equals(submittedCode)) {
                         startActivity(new Intent(Authentication.this, ListFolderActivity.class));

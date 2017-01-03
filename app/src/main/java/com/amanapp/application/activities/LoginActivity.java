@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.amanapp.R;
 import com.amanapp.application.AmanApplication;
 import com.amanapp.application.core.logics.CurrentUser;
+import com.amanapp.crypto.Enc_Dec_String;
 import com.amanapp.crypto.SecretKey;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
@@ -23,6 +24,7 @@ import com.amanapp.server.ServerTask;
 import com.amanapp.server.validation.Validation;
 
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -98,7 +100,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.first_button:
                 Log.d(TAG, "first button clicked");
-                initServerRequest();
+                try {
+                    initServerRequest();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.second_button:
                 Log.d(TAG, "second button clicked");
@@ -107,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void initServerRequest() {
+    private void initServerRequest() throws NoSuchAlgorithmException {
         Log.d(TAG, "initServerRequest()");
         resetErrors();
 
@@ -143,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "email= [" + email + "], password= [" + password + "]");
     }
 
-    protected void setServerTask() {
+    protected void setServerTask() throws NoSuchAlgorithmException {
         serverTask = new ServerTask(this, ServerRequest.RequestType.LOG_IN, this) {
             @Override
             protected void addQueries(ServerConnect connect) {
@@ -195,9 +201,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     String authsecret = response.body().getMessage();
                     // TODO Decrypt autsecret
-                    SecretKey.init(password, authsecret);
+                    byte []secauteabytesWithiv= authsecret.getBytes();
+                    byte[] iv= Enc_Dec_String.GetIv(secauteabytesWithiv);
+                    byte[] secauth =Enc_Dec_String.GetSecauth(secauteabytesWithiv);
+                    byte[] decSecauth = Enc_Dec_String.decryptString(secauth,iv);
+                    String authsecretfinal = decSecauth.toString();
 
-                    Log.d("Authsecret", "the authsecret is: " + response.body().getMessage());
+                    SecretKey.init(password, authsecretfinal);
+
+                    Log.d("Authsecret", "the authsecret is: " + authsecretfinal);
                     toNextActivity();
                 } catch (GeneralSecurityException e) {
                     e.printStackTrace();

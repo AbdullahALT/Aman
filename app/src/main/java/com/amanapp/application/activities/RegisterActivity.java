@@ -9,10 +9,13 @@ import android.widget.EditText;
 
 import com.amanapp.R;
 import com.amanapp.authentication.TwoFactorAuthUtil;
+import com.amanapp.crypto.Enc_Dec_String;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
 import com.amanapp.server.validation.Validation;
+
+import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends LoginActivity implements ServerTask.Callback {
 
@@ -73,16 +76,20 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     }
 
     @Override
-    protected void setServerTask() {
+    protected void setServerTask() throws NoSuchAlgorithmException {
         serverTask = new ServerTask(RegisterActivity.this, ServerRequest.RequestType.CREATE_USER, RegisterActivity.this) {
          //TODO Encrypt authentication
+         byte[] iv = Enc_Dec_String.getIvBytes();
 
+          byte[] secautha=Enc_Dec_String.encryptString(authsecret.getBytes(), iv);
+            byte[] send_secauht =Enc_Dec_String.AppendByte(secautha,iv);
+            String send_secauht_final= send_secauht.toString();
             @Override
             protected void addQueries(ServerConnect connect) {
                 Log.d(TAG, "addQueries()");
                 connect.addQuery("email", email).addQuery("password", password);
-                connect.addQuery("authsecret", authsecret);
-                Log.d(TAG, "email= [" + email + "], password= [" + password + "], authsecret=[ " + authsecret + "]");
+                connect.addQuery("authsecret", send_secauht_final);
+                Log.d(TAG, "email= [" + email + "], password= [" + password + "], authsecret=[ " + secautha.toString() + "]");
             }
         };
     }
