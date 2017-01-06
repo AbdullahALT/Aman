@@ -8,7 +8,7 @@ import com.dropbox.core.v2.DbxClientV2;
 /**
  * Created by Abdullah ALT on 7/20/2016.
  */
-public abstract class Task<Params, Process, Return> extends AsyncTask<Params, Process, Return> {
+public abstract class Task<Params, Return> extends AsyncTask<Params, Void, Return> {
 
     protected final DbxClientV2 dropboxClient;
     private final Callback<Return> callback;

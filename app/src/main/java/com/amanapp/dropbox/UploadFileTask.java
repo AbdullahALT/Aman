@@ -4,7 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.amanapp.application.core.UriHelpers;
+import com.amanapp.application.core.util.UriHelpers;
+import com.amanapp.crypto.Enigma;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
@@ -19,7 +20,7 @@ import java.security.GeneralSecurityException;
 /**
  * Async task to upload a file to a directory
  */
-public class UploadFileTask extends Task<String, Integer, FileMetadata> {
+public class UploadFileTask extends Task<String, FileMetadata> {
 
     public static String TAG = UploadFileTask.class.getName();
     private final Context context;
@@ -41,18 +42,9 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
             String parts[] = name.split("\\.");
             String extension = parts[1];
             Log.d(TAG, "localFile Path: " + remoteFolderPath + "/" + remoteFileName + "." + extension);
-//            //Encrypt here//
-            File encryptedFile;
-            try {
-                Enigma enigma = new Enigma(localFile.getAbsolutePath());
-                Log.d(TAG, "Enigma Created");
-                encryptedFile = enigma.encrypt();
-                Log.d(TAG, "encryptedFile is null? " + (encryptedFile == null));
-            } catch (GeneralSecurityException | IOException e) {
-                exception = e;
-                return null;
-            }
-//            //Encrypt end here//
+
+            File encryptedFile = encryptFile(localFile);
+            Log.d(TAG, "encryptedFile is null? " + (encryptedFile == null));
             if (encryptedFile != null) {
                 try (InputStream inputStream = new FileInputStream(encryptedFile)) {
                     FileMetadata result = dropboxClient.files().uploadBuilder(remoteFolderPath + "/" + remoteFileName + "." + extension + ".aman")
@@ -69,5 +61,18 @@ public class UploadFileTask extends Task<String, Integer, FileMetadata> {
             }
         }
         return null;
+    }
+
+    private File encryptFile(File file) {
+        //            //Encrypt here//
+        try {
+            Enigma enigma = new Enigma(file.getAbsolutePath());
+            Log.d(TAG, "Enigma Created");
+            return enigma.encrypt();
+        } catch (GeneralSecurityException | IOException e) {
+            exception = e;
+            return null;
+        }
+//            //Encrypt end here//
     }
 }

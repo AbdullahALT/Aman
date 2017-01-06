@@ -1,4 +1,4 @@
-package com.amanapp.authentication;
+package com.amanapp.application.core.util;
 
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
@@ -25,20 +25,19 @@ import javax.crypto.spec.SecretKeySpec;
  *
  * @author graywatson
  */
-public class TwoFactorAuthUtil {
+public class TwoFactorAuth {
 
     /**
      * default time-step which is part of the spec, 30 seconds is default
      */
     public static final int TIME_STEP_SECONDS = 30;
+    private static final String blockOfZeros;
     /**
      * set to the number of digits to control 0 prefix, set to 0 for no prefix
      */
     private static int NUM_DIGITS_OUTPUT = 6;
 
-    private final String blockOfZeros;
-
-    {
+    static {
         StringBuilder sb = new StringBuilder(NUM_DIGITS_OUTPUT);
         for (int i = 0; i < NUM_DIGITS_OUTPUT; i++) {
             sb.append('0');
@@ -49,7 +48,7 @@ public class TwoFactorAuthUtil {
     /**
      * Generate a secret key in base32 format (A-Z2-7)
      */
-    public String generateBase32Secret() {
+    public static String generateBase32Secret() {
         StringBuilder sb = new StringBuilder();
         Random random = new SecureRandom();
         for (int i = 0; i < 16; i++) {
@@ -71,7 +70,7 @@ public class TwoFactorAuthUtil {
      * For more details of this magic algorithm, see:
      * http://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
      */
-    public String generateCurrentNumber(String secret) throws GeneralSecurityException {
+    public static String generateCurrentNumber(String secret) throws GeneralSecurityException {
         return generateCurrentNumber(secret, System.currentTimeMillis());
     }
 
@@ -79,7 +78,7 @@ public class TwoFactorAuthUtil {
      * Same as {@link #generateCurrentNumber(String)} except at a particular time in millis. Mostly for testing
      * purposes.
      */
-    public String generateCurrentNumber(String secret, long currentTimeMillis) throws GeneralSecurityException {
+    public static String generateCurrentNumber(String secret, long currentTimeMillis) throws GeneralSecurityException {
 
         byte[] key = decodeBase32(secret);
 
@@ -122,7 +121,7 @@ public class TwoFactorAuthUtil {
      * <p>
      * NOTE: this must be URL escaped if it is to be put into a href on a web-page.
      */
-    public String qrImageUrl(String keyId, String secret) {
+    public static String qrImageUrl(String keyId, String secret) {
         StringBuilder sb = new StringBuilder(128);
         sb.append("https://chart.googleapis.com/chart");
         sb.append("?chs=200x200&cht=qr&chl=200x200&chld=M|0&cht=qr&chl=");
@@ -133,7 +132,7 @@ public class TwoFactorAuthUtil {
     /**
      * Return the string prepended with 0s. Tested as 10x faster than String.format("%06d", ...); Exposed for testing.
      */
-    String zeroPrepend(long num, int digits) {
+    static String zeroPrepend(long num, int digits) {
         String hashStr = Long.toString(num);
         if (hashStr.length() >= digits) {
             return hashStr;
@@ -150,7 +149,7 @@ public class TwoFactorAuthUtil {
      * Little decode base-32 method. We could use Apache Codec but I didn't want to have the dependency just for this
      * decode method. Exposed for testing.
      */
-    byte[] decodeBase32(String str) {
+    static byte[] decodeBase32(String str) {
         // each base-32 character encodes 5 bits
         int numBytes = ((str.length() * 5) + 4) / 8;
         byte[] result = new byte[numBytes];

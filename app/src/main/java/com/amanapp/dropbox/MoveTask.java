@@ -9,7 +9,7 @@ import com.dropbox.core.v2.files.Metadata;
 /**
  * Created by Abdullah ALT on 7/23/2016.
  */
-public class MoveTask extends Task<String, Void, Metadata> {
+public class MoveTask extends Task<String, Metadata> {
     public MoveTask(DbxClientV2 dropboxClient, Callback<Metadata> callback) {
         super(dropboxClient, callback);
     }

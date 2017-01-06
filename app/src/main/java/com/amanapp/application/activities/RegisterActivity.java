@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.amanapp.R;
-import com.amanapp.authentication.TwoFactorAuthUtil;
+import com.amanapp.application.core.util.TwoFactorAuth;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
 import com.amanapp.server.ServerTask;
@@ -67,7 +67,7 @@ public class RegisterActivity extends LoginActivity implements ServerTask.Callba
     protected void setValues() {
         super.setValues();
         confirmation = confirmationView.getText().toString();
-        authsecret = new TwoFactorAuthUtil().generateBase32Secret();
+        authsecret = TwoFactorAuth.generateBase32Secret();
         passwordValidation = Validation.Factory(Validation.ValidationType.REGISTRATION_PASSWORD);
         Log.d(TAG, "confirmation= [" + confirmation + "], authentication secret= [" + authsecret + "]");
     }

@@ -29,10 +29,6 @@ public abstract class ServerTask implements Callback<AmanResponse> {
         this.callback = callback;
     }
 
-    public final void request(int waitingMessage) {
-        request(context.getResources().getString(waitingMessage));
-    }
-
     public final void request(String waitingMessage) {
         connect = new ServerConnect();
         addQueries(connect);

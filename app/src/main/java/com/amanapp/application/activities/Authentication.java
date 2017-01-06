@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
+import com.amanapp.application.core.logics.AmanApplication;
 import com.amanapp.application.core.logics.CurrentUser;
-import com.amanapp.authentication.TwoFactorAuthUtil;
+import com.amanapp.application.core.util.TwoFactorAuth;
 import com.amanapp.server.AmanResponse;
 import com.amanapp.server.Requests.ServerRequest;
 import com.amanapp.server.ServerConnect;
@@ -36,22 +36,22 @@ public class Authentication extends AppCompatActivity {
         authenticationCode = (EditText) findViewById(R.id.authentication_code);
         submit = (Button) findViewById(R.id.submit_code);
 
+        initServerRequest();
+
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serverTask.request(getString(R.string.dialog_authentication));
+            }
+        });
+    }
+
+    private void initServerRequest() {
         serverTask = new ServerTask(this, ServerRequest.RequestType.GET_AUTHSECRET, new ServerTask.Callback() {
             @Override
             public void onTaskSuccess(Call<AmanResponse> call, Response<AmanResponse> response) {
-                try {
-                    String submittedCode = authenticationCode.getText().toString();
-                    String secret = response.body().getMessage();
-                    String currentCode = new TwoFactorAuthUtil().generateCurrentNumber(secret);
-
-                    if (currentCode.equals(submittedCode)) {
-                        startActivity(new Intent(Authentication.this, ListFolderActivity.class));
-                    } else {
-                        Toast.makeText(AmanApplication.getContext(), "Authentication secret is incorrect", Toast.LENGTH_LONG).show();
-                    }
-                } catch (GeneralSecurityException e) {
-                    e.printStackTrace();
-                }
+                confirm(response.body().getMessage());
             }
 
             @Override
@@ -74,14 +74,23 @@ public class Authentication extends AppCompatActivity {
                 connect.addQuery("email", CurrentUser.get());
             }
         };
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                serverTask.request(getString(R.string.dialog_authentication));
-            }
-        });
     }
+
+    private void confirm(String authsecret) {
+        try {
+            String submittedCode = authenticationCode.getText().toString();
+            String currentCode = TwoFactorAuth.generateCurrentNumber(authsecret);
+
+            if (currentCode.equals(submittedCode)) {
+                startActivity(new Intent(Authentication.this, ListFolderActivity.class));
+            } else {
+                Toast.makeText(AmanApplication.getContext(), "Authentication secret is incorrect", Toast.LENGTH_LONG).show();
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

@@ -1,6 +1,6 @@
 package com.amanapp.server.Requests;
 
-import com.amanapp.application.core.exceptions.InvalidNumberOfParametersException;
+import com.amanapp.application.core.exceptions.InvalidNumberOfQueriesException;
 import com.amanapp.application.core.exceptions.RequiredQueryException;
 import com.amanapp.server.RetrofitClient;
 
@@ -14,7 +14,7 @@ class CreateUserRequest extends ServerRequest {
     @Override
     public void checkQuery(Map<String, String> query) {
         if (query.size() != 3) {
-            throw new InvalidNumberOfParametersException("sendRequest::CreateUserRequest accepts 3 parameters " +
+            throw new InvalidNumberOfQueriesException("sendRequest::CreateUserRequest accepts 3 parameters " +
                     "in the order [email, password, salt]");
         } else if (!query.containsKey("email") || !query.containsKey("password")
                 || !query.containsKey("authsecret")) {

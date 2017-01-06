@@ -19,24 +19,24 @@ import javax.crypto.spec.IvParameterSpec;
  * Created by Abdullah ALT on 12/9/2016.
  */
 
-public class FileCrypto {
+class FileCrypto {
 
     private Cipher cipher;
 
-    public FileCrypto() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException {
+    FileCrypto() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException {
         Log.d(UploadFileTask.TAG, "File Crypto Constructor");
         cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         Log.d(UploadFileTask.TAG, "File Crypto constructed");
     }
 
-    public File encrypt(File file) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
+    File encrypt(File file) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
         Log.d(UploadFileTask.TAG, "File Crypto encrypt - File:" + file.getAbsoluteFile());
         byte[] iv = getIvBytes();
         cipher.init(Cipher.ENCRYPT_MODE, SecretKey.get(), new IvParameterSpec(iv));
         return Cryptography.encrypt(cipher, file, iv);
     }
 
-    public File decrypt(File file) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
+    File decrypt(File file) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidAlgorithmParameterException {
         return Cryptography.decrypt(cipher, file, SecretKey.get());
     }
 

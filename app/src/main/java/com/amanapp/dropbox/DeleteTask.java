@@ -9,7 +9,7 @@ import com.dropbox.core.v2.files.Metadata;
 /**
  * Created by Abdullah ALT on 8/20/2016.
  */
-public class DeleteTask extends Task<String, Void, Metadata> {
+public class DeleteTask extends Task<String, Metadata> {
 
     private final static String TAG = DeleteTask.class.getName();
 

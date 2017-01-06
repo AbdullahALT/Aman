@@ -7,7 +7,7 @@ import com.dropbox.core.v2.files.SearchResult;
 /**
  * Created by Abdullah ALT on 7/23/2016.
  */
-public class SearchTask extends Task<String, Void, SearchResult> {
+public class SearchTask extends Task<String, SearchResult> {
 
     public SearchTask(DbxClientV2 dropboxClient, Callback<SearchResult> callback) {
 

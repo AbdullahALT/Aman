@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.amanapp.application.core.logics.FileSerialized;
+import com.amanapp.crypto.Enigma;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 
@@ -19,7 +20,7 @@ import java.security.GeneralSecurityException;
 /**
  * Task to download a file from Dropbox and put it in the Downloads folder
  */
-public class DownloadFileTask extends Task<FileSerialized, Void, File> {
+public class DownloadFileTask extends Task<FileSerialized, File> {
 
     public final static String TAG = DownloadFileTask.class.getName();
     private final Context mContext;
@@ -57,9 +58,8 @@ public class DownloadFileTask extends Task<FileSerialized, Void, File> {
                         .download(outputStream);
             }
             Log.v(TAG, "File Downloaded on " + file.getPath());
-            //Decrypt
-            Enigma enigma = new Enigma(file.getAbsolutePath());
-            if (enigma.decrypt() != null) {
+            //Decrypt and check
+            if (decryptFile(file.getAbsoluteFile()) != null) {
                 boolean result = file.delete();
                 Log.v(TAG, "file deleted: " + String.valueOf(result));
             } else {
@@ -73,5 +73,10 @@ public class DownloadFileTask extends Task<FileSerialized, Void, File> {
         }
         Log.v(TAG, "An error has accord" + exception.getMessage());
         return null;
+    }
+
+    private File decryptFile(File file) throws GeneralSecurityException, IOException {
+        Enigma enigma = new Enigma(file.getAbsolutePath());
+        return enigma.decrypt();
     }
 }

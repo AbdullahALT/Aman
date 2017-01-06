@@ -9,7 +9,7 @@ import com.dropbox.core.v2.files.ListFolderResult;
 /**
  * Async task to list items in a folder
  */
-public class ListFolderTask extends Task<String, Void, ListFolderResult> {
+public class ListFolderTask extends Task<String, ListFolderResult> {
 
     private final static String TAG = ListFolderTask.class.getName();
 

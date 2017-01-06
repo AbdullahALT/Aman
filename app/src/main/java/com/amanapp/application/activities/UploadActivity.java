@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.application.core.PermissionOperation;
-import com.amanapp.application.core.UriHelpers;
+import com.amanapp.application.core.util.UriHelpers;
 import com.amanapp.dropbox.Callback;
+import com.amanapp.dropbox.PermissionOperation;
 import com.amanapp.dropbox.UploadOperation;
 import com.dropbox.core.v2.files.FileMetadata;
 

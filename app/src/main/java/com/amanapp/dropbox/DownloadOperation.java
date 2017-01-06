@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.amanapp.application.core.PermissionOperation;
-import com.amanapp.application.core.PermissionsManager;
 import com.amanapp.application.core.logics.FileSerialized;
 
 import java.io.File;

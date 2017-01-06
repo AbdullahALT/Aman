@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.amanapp.application.core.PermissionOperation;
-import com.amanapp.application.core.PermissionsManager;
 import com.dropbox.core.v2.files.FileMetadata;
 
 /**

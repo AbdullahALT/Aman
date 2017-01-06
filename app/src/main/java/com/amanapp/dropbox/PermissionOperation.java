@@ -1,12 +1,10 @@
-package com.amanapp.application.core;
+package com.amanapp.dropbox;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-
-import com.amanapp.dropbox.Callback;
 
 /**
  * Created by Abdullah ALT on 8/19/2016.
@@ -31,25 +29,25 @@ public abstract class PermissionOperation<Return> implements Callback<Return>, P
     protected abstract void startAction();
 
     public void performWithPermissions() {
-        if (hasPermissionsForAction()) {
+        if (permissionsManager.hasPermission()) {
             performAction();
             return;
         }
 
-        if (shouldDisplayRationaleForAction()) {
+        if (permissionsManager.shouldDisplayRationale()) {
             new AlertDialog.Builder(context)
                     .setMessage("This app requires storage access to download and upload files.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            requestPermissionsForAction();
+                            permissionsManager.requestPermission();
                         }
                     })
                     .setNegativeButton("Cancel", null)
                     .create()
                     .show();
         } else {
-            requestPermissionsForAction();
+            permissionsManager.requestPermission();
         }
     }
 
@@ -87,18 +85,4 @@ public abstract class PermissionOperation<Return> implements Callback<Return>, P
             callback.onError(e);
         }
     }
-
-    protected boolean hasPermissionsForAction() {
-        return permissionsManager.hasPermission();
-    }
-
-    protected boolean shouldDisplayRationaleForAction() {
-        return permissionsManager.shouldDisplayRationaleForAction();
-    }
-
-    protected void requestPermissionsForAction() {
-        permissionsManager.requestPermissionsForAction();
-    }
-
-
 }

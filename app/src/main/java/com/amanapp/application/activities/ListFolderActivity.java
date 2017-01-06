@@ -21,19 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
 import com.amanapp.application.activities.elements.DividerItemDecoration;
 import com.amanapp.application.activities.elements.MetadataAdapter;
 import com.amanapp.application.activities.elements.NameAlert;
-import com.amanapp.application.core.PermissionsManager;
-import com.amanapp.application.core.PicassoClient;
+import com.amanapp.application.core.logics.AmanApplication;
 import com.amanapp.application.core.logics.FileSerialized;
+import com.amanapp.application.core.logics.PicassoClient;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.CreateFolderTask;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.ListFolderTask;
 import com.amanapp.dropbox.MoveTask;
+import com.amanapp.dropbox.PermissionsManager;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
@@ -52,7 +52,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     private FloatingActionButton addButton;
     private TextView noDropboxAccountText;
 
-    public static Intent getIntent(Context context, String path) {
+    public static Intent openFolder(Context context, String path) {
         Intent intent = new Intent(context, ListFolderActivity.class);
         intent.putExtra(ListFolderActivity.EXTRA_PATH, path);
         return intent;
@@ -181,7 +181,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     @Override
     public void onFolderClicked(FolderMetadata folder) {
         Log.v(TAG, "the folder " + folder.getName() + " has been clicked");
-        startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, folder.getPathLower()));
+        startActivity(ListFolderActivity.openFolder(ListFolderActivity.this, folder.getPathLower()));
     }
 
     @Override
@@ -308,7 +308,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             saveAccessToken(null);
-                            startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, ""));
+                            startActivity(ListFolderActivity.openFolder(ListFolderActivity.this, ""));
                         }
                     })
                     .setNegativeButton("Cancel", null)
@@ -360,20 +360,20 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         if (permissionsManager.hasPermission()) {
             toUploadActivity();
         } else {
-            if (permissionsManager.shouldDisplayRationaleForAction()) {
+            if (permissionsManager.shouldDisplayRationale()) {
                 new AlertDialog.Builder(this)
                         .setMessage("This app requires storage access to download and upload files.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                permissionsManager.requestPermissionsForAction();
+                                permissionsManager.requestPermission();
                             }
                         })
                         .setNegativeButton("Cancel", null)
                         .create()
                         .show();
             } else {
-                permissionsManager.requestPermissionsForAction();
+                permissionsManager.requestPermission();
             }
         }
     }
@@ -417,6 +417,6 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
 
     private void refreshActivity() {
         ListFolderActivity.this.finish();
-        startActivity(ListFolderActivity.getIntent(ListFolderActivity.this, currentPath));
+        startActivity(ListFolderActivity.openFolder(ListFolderActivity.this, currentPath));
     }
 }

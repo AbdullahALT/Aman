@@ -1,6 +1,6 @@
 package com.amanapp.server.Requests;
 
-import com.amanapp.application.core.exceptions.InvalidNumberOfParametersException;
+import com.amanapp.application.core.exceptions.InvalidNumberOfQueriesException;
 import com.amanapp.application.core.exceptions.RequiredQueryException;
 import com.amanapp.server.RetrofitClient;
 
@@ -14,7 +14,7 @@ class LoginRequest extends ServerRequest {
     @Override
     protected void checkQuery(Map<String, String> query) {
         if (query.size() != 2) {
-            throw new InvalidNumberOfParametersException("sendRequest::LoginRequest accepts 2 parameters " +
+            throw new InvalidNumberOfQueriesException("sendRequest::LoginRequest accepts 2 parameters " +
                     " in the order [email, password]");
         } else if (!query.containsKey("email") || !query.containsKey("password")) {
             throw new RequiredQueryException();

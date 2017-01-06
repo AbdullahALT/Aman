@@ -7,7 +7,7 @@ import com.dropbox.core.v2.users.FullAccount;
 /**
  * Async task for getting user account info
  */
-public class GetCurrentAccountTask extends Task<Void, Void, FullAccount> {
+public class GetCurrentAccountTask extends Task<Void, FullAccount> {
 
     private FullAccount result;
 

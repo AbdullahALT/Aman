@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.amanapp.application.core.PicassoClient;
+import com.amanapp.application.core.logics.AccessManager;
 import com.amanapp.application.core.logics.CurrentUser;
-import com.amanapp.dropbox.AccessManager;
+import com.amanapp.application.core.logics.PicassoClient;
 import com.amanapp.dropbox.DropboxClient;
 
 /**

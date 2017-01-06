@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
+import com.amanapp.application.core.logics.AmanApplication;
 import com.amanapp.application.core.logics.CurrentUser;
 import com.amanapp.crypto.SecretKey;
 import com.amanapp.server.AmanResponse;

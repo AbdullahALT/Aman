@@ -1,6 +1,6 @@
 package com.amanapp.server.Requests;
 
-import com.amanapp.application.core.exceptions.InvalidNumberOfParametersException;
+import com.amanapp.application.core.exceptions.InvalidNumberOfQueriesException;
 import com.amanapp.application.core.exceptions.RequiredQueryException;
 import com.amanapp.server.RetrofitClient;
 
@@ -10,12 +10,12 @@ import java.util.Map;
 /**
  * Created by Abdullah ALT on 11/18/2016.
  */
-public class EmailAvailableRequest extends ServerRequest {
+class EmailAvailableRequest extends ServerRequest {
 
     @Override
     protected void checkQuery(Map<String, String> query) {
         if (query.size() != 1) {
-            throw new InvalidNumberOfParametersException("sendRequest::EmailAvailableRequest accepts 1 parameter " +
+            throw new InvalidNumberOfQueriesException("sendRequest::EmailAvailableRequest accepts 1 parameter " +
                     " in the order [email]");
         }
         if (!query.containsKey("email")) {

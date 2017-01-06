@@ -1,4 +1,4 @@
-package com.amanapp.application.core;
+package com.amanapp.dropbox;
 
 import android.Manifest;
 import android.app.Activity;
@@ -42,7 +42,7 @@ public class PermissionsManager {
         return true;
     }
 
-    public boolean shouldDisplayRationaleForAction() {
+    public boolean shouldDisplayRationale() {
         for (String name : permissions.getPermissions()) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, name)) {
                 return true;
@@ -51,7 +51,7 @@ public class PermissionsManager {
         return false;
     }
 
-    public void requestPermissionsForAction() {
+    public void requestPermission() {
         ActivityCompat.requestPermissions(
                 (Activity) context,
                 permissions.getPermissions(),

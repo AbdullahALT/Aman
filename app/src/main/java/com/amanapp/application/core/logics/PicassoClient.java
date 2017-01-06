@@ -1,9 +1,9 @@
-package com.amanapp.application.core;
+package com.amanapp.application.core.logics;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.amanapp.dropbox.FileThumbnailRequestHandler;
+import com.amanapp.application.core.util.FileThumbnailRequestHandler;
 import com.dropbox.core.v2.DbxClientV2;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;

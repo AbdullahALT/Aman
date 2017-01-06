@@ -16,15 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
 import com.amanapp.application.activities.elements.NameAlert;
-import com.amanapp.application.core.PermissionOperation;
+import com.amanapp.application.core.logics.AmanApplication;
 import com.amanapp.application.core.logics.FileSerialized;
 import com.amanapp.dropbox.Callback;
 import com.amanapp.dropbox.DeleteTask;
 import com.amanapp.dropbox.DownloadOperation;
 import com.amanapp.dropbox.DropboxClient;
 import com.amanapp.dropbox.MoveTask;
+import com.amanapp.dropbox.PermissionOperation;
 import com.dropbox.core.v2.files.Metadata;
 import com.squareup.picasso.RequestCreator;
 
@@ -39,6 +39,7 @@ public class FileDetailsActivity extends AppCompatActivity {
     private PermissionOperation download;
 
     private ImageView fileImage;
+    private TextView fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,35 +54,14 @@ public class FileDetailsActivity extends AppCompatActivity {
         RequestCreator requestCreator = file.getThumbnail();
         if (requestCreator != null) requestCreator.into(fileImage);
 
-        final TextView fileName = (TextView) findViewById(R.id.file_name);
+        fileName = (TextView) findViewById(R.id.file_name);
         fileName.setText(file.getName());
 
         ImageView changeName = (ImageView) findViewById(R.id.change_name_icon);
         changeName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NameAlert nameAlert = new NameAlert(FileDetailsActivity.this, "Change", "Change", new NameAlert.onPositive() {
-                    @Override
-                    public void click(final String name) {
-                        if (name.length() > 0) {
-                            new MoveTask(DropboxClient.getClient(), new Callback<Metadata>() {
-                                @Override
-                                public void onTaskComplete(Metadata result) {
-                                    fileName.setText(name);
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Toast.makeText(AmanApplication.getContext(), R.string.error_occurred, Toast.LENGTH_LONG).show();
-                                    e.printStackTrace();
-                                }
-                            }).execute(file.getPathLower(), file.getParentPath().toLowerCase() + name + "." + file.getExtension());
-                        } else {
-                            Toast.makeText(AmanApplication.getContext(), "No name found", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-                nameAlert.show();
+                rename();
             }
         });
 
@@ -116,18 +96,7 @@ public class FileDetailsActivity extends AppCompatActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                download = new DownloadOperation(FileDetailsActivity.this, file, getString(R.string.downloading), new Callback<File>() {
-                    @Override
-                    public void onTaskComplete(File result) {
-                        Toast.makeText(AmanApplication.getContext(), "The file has been downloaded", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(AmanApplication.getContext(), "Error downloading the file", Toast.LENGTH_LONG).show();
-                    }
-                });
-                download.performWithPermissions();
+                download();
             }
         });
 
@@ -135,44 +104,90 @@ public class FileDetailsActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                new AlertDialog.Builder(FileDetailsActivity.this)
-                        .setTitle(file.getName() + "." + file.getExtension())
-                        .setMessage(R.string.delete_file_alert_message)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Log.v(TAG, "Start Deleting");
-                                        new DeleteTask(DropboxClient.getClient(),
-                                                new Callback<Metadata>() {
-                                                    @Override
-                                                    public void onTaskComplete(Metadata result) {
-                                                        Log.v(TAG, "The file " + result.getName() + " has been deleted");
-                                                        Toast.makeText(AmanApplication.getContext(),
-                                                                R.string.toast_delete_success,
-                                                                Toast.LENGTH_LONG).show();
-                                                        finish();
-
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Exception e) {
-                                                        Log.v(TAG, "Error deleting the file: " + e.getMessage());
-                                                        Toast.makeText(AmanApplication.getContext(),
-                                                                R.string.error_occurred,
-                                                                Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-
-                                        ).execute(file.getPathLower());
-                                    }
-                                }
-                        )
-                        .setNegativeButton("Cancel", null)
-                        .create()
-                        .show();
+                delete();
             }
         });
     }
+
+    private void download() {
+        download = new DownloadOperation(FileDetailsActivity.this, file, getString(R.string.downloading), new Callback<File>() {
+            @Override
+            public void onTaskComplete(File result) {
+                Toast.makeText(AmanApplication.getContext(), "The file has been downloaded", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(AmanApplication.getContext(), "Error downloading the file", Toast.LENGTH_LONG).show();
+            }
+        });
+        download.performWithPermissions();
+    }
+
+    private void rename() {
+        NameAlert nameAlert = new NameAlert(FileDetailsActivity.this, "Change", "Change", new NameAlert.onPositive() {
+            @Override
+            public void click(final String name) {
+                if (name.length() > 0) {
+                    new MoveTask(DropboxClient.getClient(), new Callback<Metadata>() {
+                        @Override
+                        public void onTaskComplete(Metadata result) {
+                            fileName.setText(name);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(AmanApplication.getContext(), R.string.error_occurred, Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }).execute(file.getPathLower(), file.getParentPath().toLowerCase() + name + "." + file.getExtension());
+                } else {
+                    Toast.makeText(AmanApplication.getContext(), "No name found", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        nameAlert.show();
+    }
+
+
+    private void delete() {
+        new AlertDialog.Builder(FileDetailsActivity.this)
+                .setTitle(file.getName() + "." + file.getExtension())
+                .setMessage(R.string.delete_file_alert_message)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.v(TAG, "Start Deleting");
+                                new DeleteTask(DropboxClient.getClient(),
+                                        new Callback<Metadata>() {
+                                            @Override
+                                            public void onTaskComplete(Metadata result) {
+                                                Log.v(TAG, "The file " + result.getName() + " has been deleted");
+                                                Toast.makeText(AmanApplication.getContext(),
+                                                        R.string.toast_delete_success,
+                                                        Toast.LENGTH_LONG).show();
+                                                finish();
+
+                                            }
+
+                                            @Override
+                                            public void onError(Exception e) {
+                                                Log.v(TAG, "Error deleting the file: " + e.getMessage());
+                                                Toast.makeText(AmanApplication.getContext(),
+                                                        R.string.error_occurred,
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                ).execute(file.getPathLower());
+                            }
+                        }
+                )
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

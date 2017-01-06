@@ -1,4 +1,4 @@
-package com.amanapp.application.core;
+package com.amanapp.application.core.util;
 
 import android.content.ContentUris;
 import android.content.Context;

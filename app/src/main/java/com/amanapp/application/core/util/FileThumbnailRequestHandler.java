@@ -1,4 +1,4 @@
-package com.amanapp.dropbox;
+package com.amanapp.application.core.util;
 
 import android.net.Uri;
 

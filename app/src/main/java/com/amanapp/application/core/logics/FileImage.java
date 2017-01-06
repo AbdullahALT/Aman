@@ -5,9 +5,7 @@ import android.content.res.Resources;
 import android.webkit.MimeTypeMap;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
-import com.amanapp.application.core.PicassoClient;
-import com.amanapp.dropbox.FileThumbnailRequestHandler;
+import com.amanapp.application.core.util.FileThumbnailRequestHandler;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.Serializable;

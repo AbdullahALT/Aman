@@ -18,9 +18,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.amanapp.R;
-import com.amanapp.application.AmanApplication;
+import com.amanapp.application.core.logics.AmanApplication;
 import com.amanapp.application.core.logics.CurrentUser;
-import com.amanapp.authentication.TwoFactorAuthUtil;
+import com.amanapp.application.core.util.TwoFactorAuth;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageView instructionCardImage;
     private TextView instructionDetails;
     private ScrollView scrollView;
-    private String secretKey;
+    private String authsecret;
     private String email;
 
     @Override
@@ -48,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         Intent intent = getIntent();
-        secretKey = intent.getExtras().getString(EXTRA_SECRET);
+        authsecret = intent.getExtras().getString(EXTRA_SECRET);
         email = intent.getExtras().getString(EXTRA_EMAIL);
 
         emailTextView = (TextView) findViewById(R.id.email_text);
@@ -63,9 +63,8 @@ public class WelcomeActivity extends AppCompatActivity {
         instructionDetails = (TextView) findViewById(R.id.instruction_details);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
-        TwoFactorAuthUtil auth = new TwoFactorAuthUtil();
         Picasso.with(this)
-                .load(auth.qrImageUrl(getResources().getString(R.string.app_name), secretKey))
+                .load(TwoFactorAuth.qrImageUrl(getResources().getString(R.string.app_name), authsecret))
                 .placeholder(R.drawable.ic_photo_grey_600_36dp)
                 .into(qrCodeImage);
 
@@ -121,7 +120,7 @@ public class WelcomeActivity extends AppCompatActivity {
         PackageManager manager = AmanApplication.getContext().getPackageManager();
         Intent intent = manager.getLaunchIntentForPackage(packageName);
         if (intent != null) {
-            Intent authIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("otpauth://totp/Aman%20App:" + CurrentUser.get() + "?secret=" + secretKey + "&issuer=Aman%20App"));
+            Intent authIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("otpauth://totp/Aman%20App:" + CurrentUser.get() + "?secret=" + authsecret + "&issuer=Aman%20App"));
             startActivity(authIntent);
         } else {
             openStorePage(packageName);

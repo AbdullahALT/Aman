@@ -18,7 +18,7 @@ public abstract class Validation {
      * this class start validating immediately after calling, so be sure to only initialize when you want to start validating
      *
      */
-    public Validation() {
+    Validation() {
         this.errorMessages = new LinkedList<>();
         setValidators();
     }
