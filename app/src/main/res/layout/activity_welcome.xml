@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Proceed To Your Account" />
+            android:text="@string/welcom_proceed" />
 
         <ScrollView
             android:id="@+id/scrollView"

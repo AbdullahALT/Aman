@@ -12,7 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:orientation="vertical"
         android:padding="@dimen/global_padding">
+
+        <ImageView
+            android:layout_width="@dimen/icon_extra_big"
+            android:layout_height="@dimen/icon_extra_big"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/button_margin_small"
+            android:src="@drawable/ic_fingerprint_black_24dp" />
 
         <include layout="@layout/card_authentication" />
 

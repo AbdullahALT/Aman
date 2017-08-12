@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amanapp.R;
@@ -50,7 +49,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
     private RecyclerView filesView;
     private Toolbar toolbar;
     private FloatingActionButton addButton;
-    private TextView noDropboxAccountText;
+    private View noDropboxAccountText;
 
     public static Intent openFolder(Context context, String path) {
         Intent intent = new Intent(context, ListFolderActivity.class);
@@ -74,7 +73,7 @@ public class ListFolderActivity extends DropboxActivity implements MetadataAdapt
         getSupportActionBar().setTitle("Files List");
         //TODO: Set Logo For The Toolbar
 
-        noDropboxAccountText = (TextView) findViewById(R.id.no_dropbox_message);
+        noDropboxAccountText = findViewById(R.id.no_dropbox_message);
 
         addButton = (FloatingActionButton) findViewById(R.id.addButton);
 

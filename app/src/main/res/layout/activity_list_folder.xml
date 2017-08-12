@@ -17,7 +17,9 @@
             android:id="@+id/filesView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/global_padding_small" />
+            android:paddingEnd="@dimen/global_padding_small"
+            android:paddingStart="@dimen/global_padding_small"
+            android:paddingTop="@dimen/global_padding_small" />
 
 
     </LinearLayout>
@@ -32,14 +34,36 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_24dp" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/no_dropbox_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/no_dropbox_account"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="invisible" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_extra_big"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_cloud_off_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_dropbox_account"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="@dimen/activity_vertical_margin_small"
+            android:paddingStart="@dimen/activity_vertical_margin_small"
+            android:text="@string/no_dropbox_account_sub" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

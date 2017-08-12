@@ -38,6 +38,7 @@
             android:theme="@style/AmanTheme" />
         <activity
             android:name=".application.activities.UploadActivity"
+            android:label="@string/upload_activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".application.activities.RegisterActivity"

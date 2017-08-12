@@ -17,6 +17,14 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+        <ImageView
+            android:layout_width="@dimen/icon_extra_big"
+            android:layout_height="@dimen/icon_extra_big"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/button_margin_small"
+            android:src="@drawable/ic_launcher" />
+
+
         <include layout="@layout/card_server_form" />
 
         <Button
