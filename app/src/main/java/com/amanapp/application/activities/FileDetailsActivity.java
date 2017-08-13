@@ -140,7 +140,7 @@ public class FileDetailsActivity extends AppCompatActivity {
                             Toast.makeText(AmanApplication.getContext(), R.string.error_occurred, Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
-                    }).execute(file.getPathLower(), file.getParentPath().toLowerCase() + name + "." + file.getExtension());
+                    }).execute(file.getPathLower(), file.getParentPath().toLowerCase() + name + file.getFullExtension());
                 } else {
                     Toast.makeText(AmanApplication.getContext(), "No name found", Toast.LENGTH_LONG).show();
                 }

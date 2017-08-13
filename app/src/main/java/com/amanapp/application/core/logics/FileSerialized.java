@@ -64,6 +64,10 @@ public class FileSerialized implements Serializable {
         return path.getExtension();
     }
 
+    public String getFullExtension() {
+        return path.getFullExtensions();
+    }
+
     public String getFolder() {
         return path.getFolder();
     }

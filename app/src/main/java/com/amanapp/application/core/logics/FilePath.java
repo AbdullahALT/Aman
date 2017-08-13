@@ -26,6 +26,15 @@ public class FilePath implements Serializable {
         return nameParts[nameParts.length - 1].toLowerCase();
     }
 
+    String getFullExtensions() {
+        String extensions = "";
+        for (int i = 1; i < nameParts.length; i++) {
+            extensions = extensions.concat(".");
+            extensions = extensions.concat(nameParts[i]);
+        }
+        return extensions;
+    }
+
     String getFolder() {
         int folderIndex = pathParts.length - 2;
         return isHomeFolder(folderIndex) ? "Home" : pathParts[folderIndex];
@@ -42,6 +51,7 @@ public class FilePath implements Serializable {
     String getFullName() {
         return fullName;
     }
+
 
     String getParentPath() {
         String parent = "";
